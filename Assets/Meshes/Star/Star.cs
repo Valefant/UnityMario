@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using ExtensionMethods;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 namespace ExtensionMethods
 {
 	public static class MyExtensions
@@ -45,7 +49,7 @@ public class Star : MonoBehaviour
 
 	#region Parameter
 	public float depth = 3;
-	public float Size = 10f;
+	public float size = 10f;
 	#endregion
 
 	public Texture2D mainTexture;
@@ -55,7 +59,7 @@ public class Star : MonoBehaviour
         CreateMesh();
     }
 
-    private void CreateMesh()
+	public void CreateMesh()
     {
 		Mesh ();
 		Clear ();
@@ -105,25 +109,25 @@ public class Star : MonoBehaviour
 		float maxX = 21 + (1 / 16);
 		float maxY = 20 + (1 / 16);
 
-		P0 = MyExtensions.Vector3 (3 + (11 / 16), 0, Size);
-		P1 = MyExtensions.Vector3 (6 + (3 / 16), 7 + (5 / 8), Size);
-		P2 = MyExtensions.Vector3(0, 12+(1/8) + 5/8, Size);
-		P3 = MyExtensions.Vector3(7+(7/8), maxY-(7+(7/8)), Size);
-		P4 = MyExtensions.Vector3 (maxX/2, maxY, Size);
-		P5 = MyExtensions.Vector3 (maxX - 7 + (7 / 8), maxY-(7+(7/8)), Size);
-		P6 = MyExtensions.Vector3 (maxX, 12 + (1 / 8) + 5 / 8, Size);
-		P7 = MyExtensions.Vector3 (maxX - 6 + (3 / 16), 7 + (5 / 8), Size);
-		P8 = MyExtensions.Vector3 (maxX-(3+(11/16)), 0, Size);
-		P9 = MyExtensions.Vector3((maxX/2), 4+(7/16), Size);
-		P10 = MyExtensions.Vector3 (maxX / 2, maxY / 2, depth, Size);
-		P11 = MyExtensions.Vector3 (maxX / 2, maxY / 2, -depth, Size);
+		P0 = MyExtensions.Vector3 (3 + (11 / 16), 0, size);
+		P1 = MyExtensions.Vector3 (6 + (3 / 16), 7 + (5 / 8), size);
+		P2 = MyExtensions.Vector3(0, 12+(1/8) + 5/8, size);
+		P3 = MyExtensions.Vector3(7+(7/8), maxY-(7+(7/8)), size);
+		P4 = MyExtensions.Vector3 (maxX/2, maxY, size);
+		P5 = MyExtensions.Vector3 (maxX - 7 + (7 / 8), maxY-(7+(7/8)), size);
+		P6 = MyExtensions.Vector3 (maxX, 12 + (1 / 8) + 5 / 8, size);
+		P7 = MyExtensions.Vector3 (maxX - 6 + (3 / 16), 7 + (5 / 8), size);
+		P8 = MyExtensions.Vector3 (maxX-(3+(11/16)), 0, size);
+		P9 = MyExtensions.Vector3((maxX/2), 4+(7/16), size);
+		P10 = MyExtensions.Vector3 (maxX / 2, maxY / 2, depth, size);
+		P11 = MyExtensions.Vector3 (maxX / 2, maxY / 2, -depth, size);
 	}
 
 	private int[] Triangles()
 	{
 		int[] triangle = new int[60];
 
-		// Front
+		#region Front
 		// 1. Dreieck
 		triangle [0] = 9;
 		triangle [1] = 0;
@@ -165,10 +169,10 @@ public class Star : MonoBehaviour
 		triangle [27] = 8;
 		triangle [28] = 9;
 		triangle [29] = 10;
+		#endregion
 
 
-
-		// Back
+		#region Back
 		// 11. Dreieck
 		triangle [30] = 0;
 		triangle [31] = 9;
@@ -210,6 +214,7 @@ public class Star : MonoBehaviour
 		triangle [57] = 9;
 		triangle [58] = 8;
 		triangle [59] = 11;
+		#endregion
 
 		return triangle;
 	}
@@ -242,7 +247,7 @@ public class Star : MonoBehaviour
 	{
 		
 	}
-	/*
+
 	#if UNITY_EDITOR
 	[MenuItem("GameObject/Primitives/Star", false, 50)]
 	public static Star CreateStar()
@@ -254,5 +259,5 @@ public class Star : MonoBehaviour
 
 		return star;
 	}
-	#endif */
+	#endif
 }
