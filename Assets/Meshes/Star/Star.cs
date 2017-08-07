@@ -127,25 +127,85 @@ public class Star : MonoBehaviour
 	{
 		int[] triangle = new int[60];
 
+		int x = 9;
+
+		for (int i = 59; i >= 0; i--) 
+		{
+			if ((i+1) % 3 == 0) 
+			{
+				if(i<30)
+					triangle [i] = 10;
+				else
+					triangle [i] = 11;
+
+				if (i == 32) {
+					x = 0;
+					continue;
+				}
+
+				if (i > 29) {
+					if (x < 9)
+						x++;
+				} else 
+				{
+					if (x > 0)
+						x--;
+				}
+
+				Debug.Log("Mod i = "+i + " , X = " + triangle[i]); 
+			}
+			else 
+			{
+				triangle [i] = x;
+
+				if (i == 32) {
+					x = 0; Debug.Log("i = "+i + " , X = " + triangle[i]); 
+					continue;
+				} else if (i == 31) {
+					x = 9; Debug.Log("i = "+i + " , X = " + triangle[i]); 
+					continue;
+				}else if (i == 1) {
+					triangle [i] = 9; Debug.Log("i = "+i + " , X = " + triangle[i]); 
+					continue;
+				} else if (i == 0) {
+					triangle [i] = 0; Debug.Log("i = "+i + " , X = " + triangle[i]); 
+					continue;
+				}
+
+				if (i > 29) {
+					if (x == 0)
+						x = 9;
+					else
+						x--;
+				} else 
+				{
+					if (x == 9)
+						x = 0;
+					else
+						x++;
+				}
+
+
+				Debug.Log("Unten i = "+i + " , X = " + triangle[i]); 
+			}
+		}
 		#region Front
 		// 1. Dreieck
-		triangle [0] = 9;
-		triangle [1] = 0;
-		triangle [2] = 10;
 
-		triangle [3] = 0;
-		triangle [4] = 1;
-		triangle [5] = 10;
+		/*
+		triangle [i] = 0;
+		triangle [i] = 1;
 
-		triangle [6] = 1;
-		triangle [7] = 2;
-		triangle [8] = 10;
 
-		triangle [9] = 2;
-		triangle [10] = 3;
-		triangle [11] = 10;
+		triangle [i] = 1;
+		triangle [i] = 2;
+		triangle [i] = 10;
 
-		triangle [12] = 3;
+		triangle [i] = 2;
+		triangle [i] = 3;
+		triangle [i] = 10;
+
+		triangle [] = 3;
 		triangle [13] = 4;
 		triangle [14] = 10;
 
@@ -169,6 +229,10 @@ public class Star : MonoBehaviour
 		triangle [27] = 8;
 		triangle [28] = 9;
 		triangle [29] = 10;
+
+		triangle [i] = 9;
+		triangle [i] = 0;
+		triangle [i] = 10;
 		#endregion
 
 
@@ -214,6 +278,7 @@ public class Star : MonoBehaviour
 		triangle [57] = 9;
 		triangle [58] = 8;
 		triangle [59] = 11;
+		*/
 		#endregion
 
 		return triangle;
