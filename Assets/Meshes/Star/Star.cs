@@ -44,7 +44,7 @@ public class Star : MonoBehaviour
 	#endregion
 
 	#region Parameter
-	public float depth = 1;
+	public float depth = 3;
 	public float Size = 10f;
 	#endregion
 
@@ -121,8 +121,9 @@ public class Star : MonoBehaviour
 
 	private int[] Triangles()
 	{
-		int[] triangle = new int[30];
+		int[] triangle = new int[60];
 
+		// Front
 		// 1. Dreieck
 		triangle [0] = 9;
 		triangle [1] = 0;
@@ -164,6 +165,51 @@ public class Star : MonoBehaviour
 		triangle [27] = 8;
 		triangle [28] = 9;
 		triangle [29] = 10;
+
+
+
+		// Back
+		// 11. Dreieck
+		triangle [30] = 0;
+		triangle [31] = 9;
+		triangle [32] = 11;
+
+		triangle [33] = 1;
+		triangle [34] = 0;
+		triangle [35] = 11;
+
+		triangle [36] = 2;
+		triangle [37] = 1;
+		triangle [38] = 11;
+
+		triangle [39] = 3;
+		triangle [40] = 2;
+		triangle [41] = 11;
+
+		triangle [42] = 4;
+		triangle [43] = 3;
+		triangle [44] = 11;
+
+		triangle [45] = 5;
+		triangle [46] = 4;
+		triangle [47] = 11;
+
+		triangle [48] = 6;
+		triangle [49] = 5;
+		triangle [50] = 11;
+
+		triangle [51] = 7;
+		triangle [52] = 6;
+		triangle [53] = 11;
+
+		triangle [54] = 8;
+		triangle [55] = 7;
+		triangle [56] = 11;
+
+		// 20. Dreieck
+		triangle [57] = 9;
+		triangle [58] = 8;
+		triangle [59] = 11;
 
 		return triangle;
 	}
