@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Castle : MonoBehaviour {
+[RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
+public class Castle : MonoBehaviour
+{
+    public void Reset()
+    {
+        CreateMesh();
+    }
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    private void CreateMesh()
+    {
+
+    }
 }

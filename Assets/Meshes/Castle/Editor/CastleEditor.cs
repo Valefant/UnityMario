@@ -1,16 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
-public class CastleEditor : MonoBehaviour {
+[CustomEditor(typeof(Castle))]
+public class CastleEditor : Editor
+{
+    Castle castle;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    void Awake()
+    {
+        castle = target as Castle;
+    }
 }

@@ -1,16 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
-public class CannonEditor : MonoBehaviour {
+[CustomEditor(typeof(Cannon))]
+public class CannonEditor : Editor
+{
+    Cannon cannon;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    void Awake()
+    {
+        cannon = target as Cannon;        
+    }
 }

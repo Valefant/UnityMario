@@ -1,16 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
-public class TubeEditor : MonoBehaviour {
+[CustomEditor(typeof(Tube))]
+public class TubeEditor : Editor
+{
+    Tube tube;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    void Awake()
+    {
+        tube = target as Tube;
+    }
 }
