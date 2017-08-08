@@ -122,97 +122,98 @@ public class Ground : MonoBehaviour {
         mainPartTriangle[7] = 5;
         mainPartTriangle[8] = 4;
 
-        mainPartTriangle[9] = 0;
-        mainPartTriangle[10] = 0;
-        mainPartTriangle[11] = 0;
+        mainPartTriangle[9] = 4;
+        mainPartTriangle[10] = 7;
+        mainPartTriangle[11] = 6;
 
         // Left
-        mainPartTriangle[12] = 0;
-        mainPartTriangle[13] = 0;
-        mainPartTriangle[14] = 0;
-        mainPartTriangle[15] = 0;
-        mainPartTriangle[16] = 0;
-        mainPartTriangle[17] = 0;
+        mainPartTriangle[12] = 8;
+        mainPartTriangle[13] = 9;
+        mainPartTriangle[14] = 10;
+        mainPartTriangle[15] = 10;
+        mainPartTriangle[16] = 11;
+        mainPartTriangle[17] = 8;
 
         // Right
-        mainPartTriangle[18] = 0;
-        mainPartTriangle[19] = 0;
-        mainPartTriangle[20] = 0;
-        mainPartTriangle[21] = 0;
-        mainPartTriangle[22] = 0;
-        mainPartTriangle[23] = 0;
+        mainPartTriangle[18] = 12;
+        mainPartTriangle[19] = 13;
+        mainPartTriangle[20] = 14;
+        mainPartTriangle[21] = 14;
+        mainPartTriangle[22] = 15;
+        mainPartTriangle[23] = 12;
 
         // Top
-        mainPartTriangle[24] = 0;
-        mainPartTriangle[25] = 0;
-        mainPartTriangle[26] = 0;
-        mainPartTriangle[27] = 0;
-        mainPartTriangle[28] = 0;
-        mainPartTriangle[29] = 0;
+        mainPartTriangle[24] = 16;
+        mainPartTriangle[25] = 17;
+        mainPartTriangle[26] = 18;
+        mainPartTriangle[27] = 18;
+        mainPartTriangle[28] = 19;
+        mainPartTriangle[29] = 16;
 
         // Down
-        mainPartTriangle[30] = 0;
-        mainPartTriangle[31] = 0;
-        mainPartTriangle[32] = 0;
-        mainPartTriangle[33] = 0;
-        mainPartTriangle[34] = 0;
-        mainPartTriangle[35] = 0;
+        mainPartTriangle[30] = 22;
+        mainPartTriangle[31] = 21;
+        mainPartTriangle[32] = 20;
+        mainPartTriangle[33] = 20;
+        mainPartTriangle[34] = 23;
+        mainPartTriangle[35] = 22;
         #endregion
 
 
         #region top part
         // Front
-        topPartTriangle[0] = 0;
-        topPartTriangle[1] = 0;
-        topPartTriangle[2] = 0;
-        topPartTriangle[3] = 0;
-        topPartTriangle[4] = 0;
-        topPartTriangle[5] = 0;
+        topPartTriangle[0] = 24;
+        topPartTriangle[1] = 25;
+        topPartTriangle[2] = 26;
+        topPartTriangle[3] = 26;
+        topPartTriangle[4] = 27;
+        topPartTriangle[5] = 24;
 
         // Back
-        topPartTriangle[6] = 0;
-        topPartTriangle[7] = 0;
-        topPartTriangle[8] = 0;
-        topPartTriangle[9] = 0;
-        topPartTriangle[10] = 0;
-        topPartTriangle[11] = 0;
+        topPartTriangle[6] = 30;
+        topPartTriangle[7] = 29;
+        topPartTriangle[8] = 28;
+        topPartTriangle[9] = 28;
+        topPartTriangle[10] = 31;
+        topPartTriangle[11] = 30;
 
         // Left
-        topPartTriangle[12] = 0;
-        topPartTriangle[13] = 0;
-        topPartTriangle[14] = 0;
-        topPartTriangle[15] = 0;
-        topPartTriangle[16] = 0;
-        topPartTriangle[17] = 0;
+        topPartTriangle[12] = 32;
+        topPartTriangle[13] = 33;
+        topPartTriangle[14] = 34;
+        topPartTriangle[15] = 34;
+        topPartTriangle[16] = 35;
+        topPartTriangle[17] = 32;
 
         // Right
-        topPartTriangle[18] = 0;
-        topPartTriangle[19] = 0;
-        topPartTriangle[20] = 0;
-        topPartTriangle[21] = 0;
-        topPartTriangle[22] = 0;
-        topPartTriangle[23] = 0;
+        topPartTriangle[18] = 36;
+        topPartTriangle[19] = 37;
+        topPartTriangle[20] = 38;
+        topPartTriangle[21] = 38;
+        topPartTriangle[22] = 39;
+        topPartTriangle[23] = 36;
 
         // Top
-        topPartTriangle[24] = 0;
-        topPartTriangle[25] = 0;
-        topPartTriangle[26] = 0;
-        topPartTriangle[27] = 0;
-        topPartTriangle[28] = 0;
-        topPartTriangle[29] = 0;
+        topPartTriangle[24] = 40;
+        topPartTriangle[25] = 41;
+        topPartTriangle[26] = 42;
+        topPartTriangle[27] = 42;
+        topPartTriangle[28] = 43;
+        topPartTriangle[29] = 40;
 
         // Down
-        topPartTriangle[30] = 0;
-        topPartTriangle[31] = 0;
-        topPartTriangle[32] = 0;
-        topPartTriangle[33] = 0;
-        topPartTriangle[34] = 0;
-        topPartTriangle[35] = 0;
+        topPartTriangle[30] = 44;
+        topPartTriangle[31] = 45;
+        topPartTriangle[32] = 46;
+        topPartTriangle[33] = 44;
+        topPartTriangle[34] = 47;
+        topPartTriangle[35] = 46;
         #endregion
 
-
-        mesh.SetTriangles(mainPartTriangle, 0);
-        //mesh.SetTriangles(topPartTriangle, 1);
+        mesh.subMeshCount = 2;
+        mesh.SetTriangles(mainPartTriangle, 1);
+        mesh.SetTriangles(topPartTriangle, 0);
+        TextureAndMaterial();
     }
 
     private Vector3[] Vertices()
@@ -239,10 +240,10 @@ public class Ground : MonoBehaviour {
         vertices[11] = P0;
 
         // Right
-        vertices[4] = P3;
-        vertices[5] = P2;
-        vertices[6] = P8;
-        vertices[7] = P9;
+        vertices[12] = P3;
+        vertices[13] = P2;
+        vertices[14] = P8;
+        vertices[15] = P9;
 
         // Top
         vertices[16] = P1;
@@ -265,34 +266,34 @@ public class Ground : MonoBehaviour {
         vertices[27] = P2;
 
         // Back
-        vertices[4] = P7;
-        vertices[5] = P10;
-        vertices[6] = P11;
-        vertices[7] = P8;
+        vertices[28] = P7;
+        vertices[29] = P10;
+        vertices[30] = P11;
+        vertices[31] = P8;
 
         // Left
-        vertices[8] = P7;
-        vertices[9] = P10;
-        vertices[10] = P4;
-        vertices[11] = P1;
+        vertices[32] = P7;
+        vertices[33] = P10;
+        vertices[34] = P4;
+        vertices[35] = P1;
 
         // Right
-        vertices[8] = P2;
-        vertices[9] = P5;
-        vertices[10] = P11;
-        vertices[11] = P8;
+        vertices[36] = P2;
+        vertices[37] = P5;
+        vertices[38] = P11;
+        vertices[39] = P8;
 
         // Top
-        vertices[8] = P4;
-        vertices[9] = P10;
-        vertices[10] = P11;
-        vertices[11] = P5;
+        vertices[40] = P4;
+        vertices[41] = P10;
+        vertices[42] = P11;
+        vertices[43] = P5;
 
         // Down
-        vertices[8] = P1;
-        vertices[9] = P7;
-        vertices[10] = P8;
-        vertices[11] = P2;
+        vertices[44] = P1;
+        vertices[45] = P7;
+        vertices[46] = P8;
+        vertices[47] = P2;
         #endregion
 
         return vertices;
@@ -305,7 +306,24 @@ public class Ground : MonoBehaviour {
 
     private void TextureAndMaterial()
     {
+        // TODO: Texturen laden
+        Texture[] textures = new Texture[mesh.subMeshCount];
+        textures[0] = Resources.Load("brick") as Texture;
+        textures[1] = Resources.Load("brickWhite") as Texture;
 
+        // TODO: Material-Array anlegen
+        Material[] materials = new Material[mesh.subMeshCount];
+
+        // TODO: Materialien erstellen
+        // TODO: Den Materialien die Textur zuweisen
+        for (int i = 0; i < mesh.subMeshCount; i++)
+        {
+            materials[i] = new Material(Shader.Find("Diffuse"));
+            materials[i].mainTexture = textures[i];
+        }
+
+        // TODO: Dem MeshRenderer das MaterialArray übergeben
+        meshRenderer.materials = materials;
     }
 /*
 #if UNITY_EDITOR
