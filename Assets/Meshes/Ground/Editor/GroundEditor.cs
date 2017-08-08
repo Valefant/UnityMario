@@ -20,6 +20,7 @@ public class GroundEditor : Editor
         ground.Width = EditorGUILayout.Slider("Width", ground.Width, 1f, 100f);
         ground.Height = EditorGUILayout.Slider("Height", ground.Height, 1f, 100f);
         ground.Depth = EditorGUILayout.Slider("Depth", ground.Depth, 1f, 100f);
+        ground.groundHeight = EditorGUILayout.Slider("GroundHeight", ground.groundHeight, 0f, 1f);
         #endregion // Parameters
 
         if (EditorGUI.EndChangeCheck())
