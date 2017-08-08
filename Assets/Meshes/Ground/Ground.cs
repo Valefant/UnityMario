@@ -342,45 +342,45 @@ public class Ground : MonoBehaviour {
         uv[22] = new Vector2(Width, Depth);
         uv[23] = new Vector2(Width, 0);
         #endregion
-        /*
+        
         #region Toppart
         // Front
-        uv[24] = P1;
-        uv[25] = P4;
-        uv[26] = P5;
-        uv[27] = P2;
+        uv[24] = new Vector2(0f, 0f);
+        uv[25] = new Vector2(0f, Height - Height * groundHeight);
+        uv[26] = new Vector2(Width, Height - Height * groundHeight);
+        uv[27] = new Vector2(Width, 0f);
 
         // Back
-        uv[28] = P7;
-        uv[29] = P10;
-        uv[30] = P11;
-        uv[31] = P8;
+        uv[28] = new Vector2(0f, 0f);
+        uv[29] = new Vector2(0f, Height - Height * groundHeight);
+        uv[30] = new Vector2(Width, Height - Height * groundHeight);
+        uv[31] = new Vector2(Width, 0f);
 
         // Left
-        uv[32] = P7;
-        uv[33] = P10;
-        uv[34] = P4;
-        uv[35] = P1;
+        uv[32] = new Vector2(0f, 0f);
+        uv[33] = new Vector2(0f, Height - Height * groundHeight);
+        uv[34] = new Vector2(Depth, Height - Height * groundHeight);
+        uv[35] = new Vector2(Depth, 0f);
 
         // Right
-        uv[36] = P2;
-        uv[37] = P5;
-        uv[38] = P11;
-        uv[39] = P8;
+        uv[36] = new Vector2(0f, 0f);
+        uv[37] = new Vector2(0f, Height - Height * groundHeight);
+        uv[38] = new Vector2(Depth, Height - Height * groundHeight);
+        uv[39] = new Vector2(Depth, 0f);
 
         // Top
-        uv[40] = P4;
-        uv[41] = P10;
-        uv[42] = P11;
-        uv[43] = P5;
+        uv[40] = new Vector2(0f, 0f);
+        uv[41] = new Vector2(0f, Depth);
+        uv[42] = new Vector2(Width, Depth);
+        uv[43] = new Vector2(Width, 0);
 
         // Down
-        uv[44] = P1;
-        uv[45] = P7;
-        uv[46] = P8;
-        uv[47] = P2;
+        uv[44] = new Vector2(0f, 0f);
+        uv[45] = new Vector2(0f, Depth);
+        uv[46] = new Vector2(Width, Depth);
+        uv[47] = new Vector2(Width, 0);
         #endregion
-        */
+
 
         mesh.uv = uv;
     }
