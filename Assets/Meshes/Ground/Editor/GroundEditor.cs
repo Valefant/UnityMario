@@ -1,16 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
-public class GroundEditor : MonoBehaviour {
+[CustomEditor(typeof(Ground))]
+public class GroundEditor : Editor
+{
+    Ground ground;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    void Awake()
+    {
+        ground = target as Ground;
+    }
+
+    public override void OnInspectorGUI()
+    {
+        EditorGUI.BeginChangeCheck();
+        #region Parameters
+        ground.Width = EditorGUILayout.Slider("Width", ground.Width, 1f, 100f);
+        ground.Height = EditorGUILayout.Slider("Height", ground.Height, 1f, 100f);
+        ground.Depth = EditorGUILayout.Slider("Depth", ground.Depth, 1f, 100f);
+        #endregion // Parameters
+
+        if (EditorGUI.EndChangeCheck())
+            ground.CreateMesh();
+    }
 }

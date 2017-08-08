@@ -108,7 +108,7 @@ public class Tree : MonoBehaviour
 
 	private void UVS()
 	{
-		Vector3[] uvs = new Vector3[36];
+		//Vector3[] uvs = new Vector3[36];
 	}
 
 	private void TextureAndMaterial()

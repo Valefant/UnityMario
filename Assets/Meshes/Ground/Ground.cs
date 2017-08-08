@@ -16,6 +16,8 @@ public class Ground : MonoBehaviour {
     #endregion
 
     public Vector3 P0, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11;
+    public Texture2D mainTexture;
+    public Texture2D topTexture;
 
     #region Mesh
     public Mesh mesh;
@@ -50,7 +52,7 @@ public class Ground : MonoBehaviour {
         mesh.Clear();
         mesh.vertices = vertices;
         Triangles();
-        // uvs
+        UVS();
         mesh.RecalculateNormals();
         meshFilter.mesh = mesh;
     }
@@ -301,15 +303,94 @@ public class Ground : MonoBehaviour {
 
     private void UVS()
     {
-        Vector3[] uvs = new Vector3[36];
+        Vector2[] uv = new Vector2[48];
+
+        #region Mainpart
+        // Front
+        uv[0] = new Vector2(0f, 0f);
+        uv[1] = new Vector2(0f, Height*groundHeight);
+        uv[2] = new Vector2(Width, Height * groundHeight);
+        uv[3] = new Vector2(Width, 0);
+
+        // Back
+        uv[4] = new Vector2(0f, 0f);
+        uv[5] = new Vector2(0f, Height * groundHeight);
+        uv[6] = new Vector2(Width, Height * groundHeight);
+        uv[7] = new Vector2(Width, 0f);
+
+        // Left
+        uv[8] = new Vector2(0f, 0f);
+        uv[9] = new Vector2(0f, Height * groundHeight);
+        uv[10] = new Vector2(Depth, Height * groundHeight);
+        uv[11] = new Vector2(Depth, 0f);
+
+        // Right
+        uv[12] = new Vector2(0f, 0f);
+        uv[13] = new Vector2(0f, Height * groundHeight);
+        uv[14] = new Vector2(Depth, Height * groundHeight);
+        uv[15] = new Vector2(Depth, 0f);
+
+        // Top
+        uv[16] = new Vector2(0f, 0f);
+        uv[17] = new Vector2(0f, Depth);
+        uv[18] = new Vector2(Width, Depth);
+        uv[19] = new Vector2(Width, 0);
+
+        // Down
+        uv[20] = new Vector2(0f, 0f);
+        uv[21] = new Vector2(0f, Depth);
+        uv[22] = new Vector2(Width, Depth);
+        uv[23] = new Vector2(Width, 0);
+        #endregion
+        /*
+        #region Toppart
+        // Front
+        uv[24] = P1;
+        uv[25] = P4;
+        uv[26] = P5;
+        uv[27] = P2;
+
+        // Back
+        uv[28] = P7;
+        uv[29] = P10;
+        uv[30] = P11;
+        uv[31] = P8;
+
+        // Left
+        uv[32] = P7;
+        uv[33] = P10;
+        uv[34] = P4;
+        uv[35] = P1;
+
+        // Right
+        uv[36] = P2;
+        uv[37] = P5;
+        uv[38] = P11;
+        uv[39] = P8;
+
+        // Top
+        uv[40] = P4;
+        uv[41] = P10;
+        uv[42] = P11;
+        uv[43] = P5;
+
+        // Down
+        uv[44] = P1;
+        uv[45] = P7;
+        uv[46] = P8;
+        uv[47] = P2;
+        #endregion
+        */
+
+        mesh.uv = uv;
     }
 
     private void TextureAndMaterial()
     {
         // TODO: Texturen laden
         Texture[] textures = new Texture[mesh.subMeshCount];
-        textures[0] = Resources.Load("brick") as Texture;
-        textures[1] = Resources.Load("brickWhite") as Texture;
+        textures[1] = Resources.Load("dirt stones leafs more") as Texture;
+        textures[0] = Resources.Load("leafs dark") as Texture;
 
         // TODO: Material-Array anlegen
         Material[] materials = new Material[mesh.subMeshCount];
@@ -325,7 +406,7 @@ public class Ground : MonoBehaviour {
         // TODO: Dem MeshRenderer das MaterialArray übergeben
         meshRenderer.materials = materials;
     }
-/*
+
 #if UNITY_EDITOR
     [MenuItem("GameObject/Primitives/Ground", false, 50)]
     public static Ground CreateGround()
@@ -338,5 +419,5 @@ public class Ground : MonoBehaviour {
         return ground;
     }
 #endif
-*/
+
 }
