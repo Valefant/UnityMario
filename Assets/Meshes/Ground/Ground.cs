@@ -93,14 +93,14 @@ public class Ground : MonoBehaviour {
         P3 = MyExtensions.Vector3(1,0,0, Width, Height, Depth);
 
         // Back
-        P4 = MyExtensions.Vector3(0,0,1, Width, Height, Depth);
-        P5 = MyExtensions.Vector3(0,1*groundHeight,1, Width, Height, Depth);
-        P6 = MyExtensions.Vector3(1,1*groundHeight,1, Width, Height, Depth);
-        P7 = MyExtensions.Vector3(1,0,1, Width, Height, Depth);
+        P6 = MyExtensions.Vector3(0,0,1, Width, Height, Depth);
+        P7 = MyExtensions.Vector3(0,1*groundHeight,1, Width, Height, Depth);
+        P8 = MyExtensions.Vector3(1,1*groundHeight,1, Width, Height, Depth);
+        P9 = MyExtensions.Vector3(1,0,1, Width, Height, Depth);
 
         // Submesh
-        P8 = MyExtensions.Vector3(0, 1, 0, Width, Height, Depth); // Submesh
-        P9 = MyExtensions.Vector3(1, 1, 0, Width, Height, Depth); // Submesh
+        P4 = MyExtensions.Vector3(0, 1, 0, Width, Height, Depth); // Submesh
+        P5 = MyExtensions.Vector3(1, 1, 0, Width, Height, Depth); // Submesh
         P10 = MyExtensions.Vector3(0,1,1, Width, Height, Depth); // Submesh
         P11 = MyExtensions.Vector3(1,1,1, Width, Height, Depth); // Submesh
 
@@ -118,9 +118,10 @@ public class Ground : MonoBehaviour {
         mainPartTriangle[5] = 0;
 
         // Back
-        mainPartTriangle[6] = 0;
-        mainPartTriangle[7] = 0;
-        mainPartTriangle[8] = 0;
+        mainPartTriangle[6] = 6;
+        mainPartTriangle[7] = 5;
+        mainPartTriangle[8] = 4;
+
         mainPartTriangle[9] = 0;
         mainPartTriangle[10] = 0;
         mainPartTriangle[11] = 0;
@@ -211,7 +212,7 @@ public class Ground : MonoBehaviour {
 
 
         mesh.SetTriangles(mainPartTriangle, 0);
-        mesh.SetTriangles(topPartTriangle, 1);
+        //mesh.SetTriangles(topPartTriangle, 1);
     }
 
     private Vector3[] Vertices()
