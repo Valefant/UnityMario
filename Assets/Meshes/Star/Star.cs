@@ -7,24 +7,6 @@ using ExtensionMethods;
 using UnityEditor;
 #endif
 
-namespace ExtensionMethods
-{
-	public static class MyExtensions
-	{
-		public static Vector3 Vector3(float x, float y, float size)
-		{
-			return new Vector3 (x * size, y * size);
-		}
-
-		public static Vector3 Vector3(float x, float y, float z, float size)
-		{
-			return new Vector3 (x * size, y * size, z * size);
-		}
-	}   
-}
-
-
-
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class Star : MonoBehaviour
 {
