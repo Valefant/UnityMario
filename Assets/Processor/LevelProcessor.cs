@@ -220,4 +220,83 @@ public class LevelProcessor : MonoBehaviour
         ground.transform.parent = this.transform;
         leftWorld.Add(ground);
     }
+
+    private void IfBlockTypeCreate(Level level, int r, int c)
+    {
+        List<Level> blockTypes = new List<Level>
+        {
+            Level.BRICK_BLOCK,
+            Level.QUESTION_MARK_BLOCK,
+            Level.EXCLAMATION_RED_BLOCK,
+            Level.EXCLAMATION_GREEN_BLOCK,
+            Level.EXCLAMATION_BLUE_BLOCK
+        };
+
+        if (blockTypes.Contains(level))
+        {
+            CreateBlockType(level, r, c);
+        }
+    }
+
+    private void CreateBlockType(Level level, int r, int c)
+    {
+        GameObject block = new GameObject();
+        block.AddComponent<Block>();
+
+        Block blockComponent = block.GetComponent<Block>();
+        blockComponent.width = 1;
+        blockComponent.height = 1;
+        blockComponent.depth = 1;
+
+        if (level == Level.BRICK_BLOCK)
+        {
+            blockComponent.blocktype = "Brick".ToLower();
+        }
+
+        if (level == Level.QUESTION_MARK_BLOCK)
+        {
+            blockComponent.blocktype = "Question Mark".ToLower();
+        }
+
+        if (level == Level.EXCLAMATION_RED_BLOCK)
+        {
+            blockComponent.blocktype = "Exclamation Red".ToLower();
+        }
+
+        if (level == Level.EXCLAMATION_GREEN_BLOCK)
+        {
+            blockComponent.blocktype = "Exclamation Green".ToLower();
+        }
+
+        if (level == Level.EXCLAMATION_BLUE_BLOCK)
+        {
+            blockComponent.blocktype = "Exclamation Blue".ToLower();
+        }
+
+        blockComponent.CreateMesh();
+
+        block.transform.position = new Vector3(c, r, 0);
+        block.transform.parent = this.transform;
+
+        rightWorld.Add(block);
+    }
+
+    private void IfItemCreate(Level level, int r, int c)
+    {
+        if (level == Level.STAR)
+        {
+            GameObject star = new GameObject();
+            star.AddComponent<Star>();
+
+            Star starComponent = star.GetComponent<Star>();
+            starComponent.depth = 1;
+            starComponent.size = 1f;
+            starComponent.CreateMesh();
+
+            star.transform.position = new Vector3(c, r, 0);
+            star.transform.parent = this.transform;
+
+            rightWorld.Add(star);
+        }
+    }
 }
