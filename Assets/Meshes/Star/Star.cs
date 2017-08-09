@@ -52,8 +52,9 @@ public class Star : MonoBehaviour
 		mesh.Clear ();
 		mesh.vertices = vertices;
 		mesh.SetTriangles(triangle,0);
-		// uvs
-		mesh.RecalculateNormals();
+        UVS();
+        TextureAndMaterial();
+        mesh.RecalculateNormals();
 		meshFilter.mesh = mesh;
 
 
@@ -287,13 +288,30 @@ public class Star : MonoBehaviour
 
 	private void UVS()
 	{
-		//Vector3[] uvs = new Vector3[36];
-	}
+		Vector2[] uvs = new Vector2[36];
+        /*
+        // 1
+        uvs[0] = new Vector2(0f, 0f);
+        uvs[1] = new Vector2(0f, );
+        uvs[2] = new Vector2(Width, Height * groundHeight);
+        uvs[3] = new Vector2(Width, 0);
+
+        mesh.uv = uvs; */
+    }
 
 	private void TextureAndMaterial()
 	{
-		
-	}
+        Texture texture = new Texture();
+        texture = Resources.Load("StarEmissive") as Texture;
+
+        Material yourMaterial = (Material)Resources.Load("StarEmissive", typeof(Material));
+
+        //meshRenderer.sharedMaterial = yourMaterial;
+        meshRenderer.material = yourMaterial;
+
+        //Material material = new Material(Shader.Find("StarEmissive"));
+        //meshRenderer.material = material;
+    }
 
 	#if UNITY_EDITOR
 	[MenuItem("GameObject/Primitives/Star", false, 50)]
