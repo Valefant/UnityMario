@@ -197,13 +197,23 @@ public class LevelProcessor : MonoBehaviour
                 LastGroundHeight = GroundHeight;
                 GroundHeight = 0;
             }
-
-
         }
-
         CreateGround(StartPosition, GroundWidth, LastGroundHeight);
+
+        BuildBlockTypes(map);
     }
 
+
+    private void BuildBlockTypes(Level[,] map)
+    {
+        for (int y = 0; y < map.GetLength(0); y++)
+        {
+            for (int x = 0; x < map.GetLength(1); x++)
+            {
+                IfBlockTypeCreate(map[y,x],(map.GetLength(0)-y)-1, x);
+            }
+        }
+    }
 
     private void CreateGround(int StartPosition, int GroundWidth, int GroundHeight)
     {
