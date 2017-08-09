@@ -39,5 +39,10 @@ namespace ExtensionMethods
 
             return emptyLocationsAboveGround;
         }
+
+        public static Vector2 Vector2(float x, float y, float size)
+        {
+            return new Vector2(x * size, y * size);
+        }
     }
 }
