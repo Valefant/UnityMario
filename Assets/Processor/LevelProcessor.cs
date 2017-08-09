@@ -149,7 +149,7 @@ public class LevelProcessor : MonoBehaviour
             {
                 Debug.Log(string.Format("Position = {0}; GroundWeidth = {1}; GroundHeight = {2}", StartPosition, GroundWidth, GroundHeight));
                 Debug.Log(string.Format("X = {0}", x));
-                CreateGround(StartPosition, GroundWidth - 1, LastGroundHeight);
+                CreateGround(StartPosition, GroundWidth, LastGroundHeight);
                 LastGroundHeight = 0;
                 GroundHeight = 0;
                 GroundWidth = 0;
@@ -180,10 +180,10 @@ public class LevelProcessor : MonoBehaviour
                         // and start with the next one
 
                         Debug.Log(string.Format("Position = {0}; GroundWeidth = {1}; GroundHeight = {2}", StartPosition, GroundWidth, GroundHeight));
-                        CreateGround(StartPosition, GroundWidth - 1, LastGroundHeight);
+                        CreateGround(StartPosition, GroundWidth, LastGroundHeight);
                         LastGroundHeight = GroundHeight;
                         GroundHeight = 0;
-                        GroundWidth = 1;
+                        GroundWidth = 0;
                         continue;
                     }
                 }
@@ -200,6 +200,8 @@ public class LevelProcessor : MonoBehaviour
 
 
         }
+
+        CreateGround(StartPosition, GroundWidth, LastGroundHeight);
     }
 
 
