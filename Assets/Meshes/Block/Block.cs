@@ -4,6 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+public enum BLOCK_TYPE
+{
+    BRICK,
+    QUESTION_MARK,
+    EXCLAMATION_RED,
+    EXCLAMATION_GREEN,
+    EXCLAMATION_BLUE,
+}
+
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class Block : MonoBehaviour
 {
@@ -16,7 +25,16 @@ public class Block : MonoBehaviour
     public float width = 1f;
     public float depth = 1f;
 
-    public String blocktype = "brick";
+    private Dictionary<BLOCK_TYPE, string> blockTypeToFilename = new Dictionary<BLOCK_TYPE, string>()
+    {
+        { BLOCK_TYPE.BRICK, "brick" },
+        { BLOCK_TYPE.QUESTION_MARK, "question mark" },
+        { BLOCK_TYPE.EXCLAMATION_RED, "exclamation red" },
+        { BLOCK_TYPE.EXCLAMATION_GREEN, "exclamation green" },
+        { BLOCK_TYPE.EXCLAMATION_BLUE, "exclamation blue" },
+    };
+
+    public String blocktype = "Brick";
 
     Vector3 P0, P1, P2, P3, P4, P5, P6, P7;
 
@@ -145,6 +163,11 @@ public class Block : MonoBehaviour
         P5 = new Vector3(width, height, depth);
         P6 = new Vector3(0f, 0f, depth);
         P7 = new Vector3(0f, height, depth);
+    }
+
+    private void OnDestroy()
+    {
+        Debug.Log("Hallo");
     }
 
 #if UNITY_EDITOR
