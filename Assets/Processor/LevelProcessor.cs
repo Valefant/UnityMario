@@ -56,10 +56,12 @@ public class LevelProcessor : MonoBehaviour
         GroundGenerator groundGenerator = new GroundGenerator(levelInfo);
         ObstacleGenerator obstacleGenerator = new ObstacleGenerator(levelInfo);
         BlockGenerator blockGenerator = new BlockGenerator(levelInfo);
+        ItemGenerator itemGenerator = new ItemGenerator(levelInfo);
 
         generators.Add(groundGenerator);
         generators.Add(obstacleGenerator);
         generators.Add(blockGenerator);
+        generators.Add(itemGenerator);
     }
     
     void InitializeMap(Level[,] map)
