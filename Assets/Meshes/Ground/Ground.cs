@@ -7,12 +7,13 @@ using ExtensionMethods;
 using UnityEditor;
 #endif
 
+[RequireComponent(typeof(MeshCollider))]
 public class Ground : MonoBehaviour {
     #region Parameter
     public float Height = 5;
     public float Width = 15;
     public float Depth = 2;
-    public float groundHeight = 0.8f;
+    public float groundHeight = 0.9f;
     #endregion
 
     public Vector3 P0, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11;
@@ -23,6 +24,7 @@ public class Ground : MonoBehaviour {
     public Mesh mesh;
     public MeshFilter meshFilter;
     public MeshRenderer meshRenderer;
+    public MeshCollider meshCollider;
     #endregion
 
     #region Lists - vertices, triangles, uvs
@@ -389,7 +391,7 @@ public class Ground : MonoBehaviour {
     {
         // TODO: Texturen laden
         Texture[] textures = new Texture[mesh.subMeshCount];
-        textures[1] = Resources.Load("dirt stones leafs more") as Texture;
+        textures[1] = Resources.Load("dirt stones") as Texture;
         textures[0] = Resources.Load("leafs dark") as Texture;
 
         // TODO: Material-Array anlegen

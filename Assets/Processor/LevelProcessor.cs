@@ -4,7 +4,7 @@ using System.Text;
 
 public class LevelProcessor : MonoBehaviour
 {
-    public int columns = 60;
+    public int columns = 100;
     public int rows = 20;
     public int playerHeight = 1;
     public int maxJumpHeight = 3;
@@ -14,7 +14,7 @@ public class LevelProcessor : MonoBehaviour
     public int maxGroundLength = 10;
     public float gapProbability = 0.2f;
     public float steepProbability = 0.5f;
-    public float blockProbability = 0.3f;
+    public float blockProbability = 0.35f;
 
     private List<GameObject> leftWorld = new List<GameObject>();
     private List<GameObject> rightWorld = new List<GameObject>();
