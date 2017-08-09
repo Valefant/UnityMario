@@ -122,17 +122,40 @@ public class LevelProcessor : MonoBehaviour
     {
         leftWorld = rightWorld;
     }
-
     void BuildRightGround(Level[,] map)
     {
         int GroundHeight = 0, LastGroundHeight = 0;
         int GroundWidth = 0;
         int StartPosition = 0;
+        bool Start = true;
 
 
         for (int x = 0; x < map.GetLength(1); x++)
         {
-            Debug.Log("X = " + (x + 1));
+            Debug.Log("X = " + (x));
+
+            //if(map[map.GetLength(0) - 1, x] == Level.GROUND)
+            //{
+            //    Debug.Log(string.Format("Position = {0}; GroundWeidth = {1}; GroundHeight = {2}", StartPosition, GroundWidth, GroundHeight));
+            //    CreateGround(StartPosition, GroundWidth - 1, LastGroundHeight);
+            //    LastGroundHeight = GroundHeight;
+            //    GroundHeight = 0;
+            //    GroundWidth = 1;
+            //    continue;
+            //}
+
+
+            if (map[map.GetLength(0) - 1, x] == Level.EMPTY)
+            {
+                Debug.Log(string.Format("Position = {0}; GroundWeidth = {1}; GroundHeight = {2}", StartPosition, GroundWidth, GroundHeight));
+                Debug.Log(string.Format("X = {0}", x));
+                CreateGround(StartPosition, GroundWidth - 1, LastGroundHeight);
+                LastGroundHeight = 0;
+                GroundHeight = 0;
+                GroundWidth = 0;
+                Start = true;
+            }
+
 
             if (map[map.GetLength(0) - 1, x] == Level.GROUND)
             {
@@ -141,25 +164,33 @@ public class LevelProcessor : MonoBehaviour
 
                 GroundWidth++;
 
-                for (int y = map.GetLength(0) - 1; y > 0; y--)
+                for (int y = map.GetLength(0) - 1; y >= 0; y--)
                 {
                     if (map[y, x] == Level.GROUND)
                         GroundHeight++;
 
-                    Debug.Log("Y = " + (y + 1));
+                    Debug.Log("Y = " + (y));
                 }
 
-                if (GroundHeight > LastGroundHeight)
+                if (!Start)
                 {
-                    // We need to build the Ground-Object
-                    // and start with the next one
+                    if (GroundHeight != LastGroundHeight)
+                    {
+                        // We need to build the Ground-Object
+                        // and start with the next one
 
-                    Debug.Log(string.Format("Position = {0}; GroundWeidth = {1}; GroundHeight = {2}", StartPosition, GroundWidth, GroundHeight));
+                        Debug.Log(string.Format("Position = {0}; GroundWeidth = {1}; GroundHeight = {2}", StartPosition, GroundWidth, GroundHeight));
+                        CreateGround(StartPosition, GroundWidth - 1, LastGroundHeight);
+                        LastGroundHeight = GroundHeight;
+                        GroundHeight = 0;
+                        GroundWidth = 1;
+                        continue;
+                    }
+                }
+                else
+                {
+                    Start = false;
                     LastGroundHeight = GroundHeight;
-                    CreateGround(StartPosition, GroundWidth, GroundHeight);
-                    GroundHeight = 0;
-                    GroundWidth = 0;
-                    continue;
                 }
 
                 //Debug.Log(string.Format("Ende X: Position = {0}; GroundWeidth = {1}; GroundHeight = {2}", StartPosition, GroundWidth, GroundHeight));
