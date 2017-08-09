@@ -13,21 +13,7 @@ public class ItemGenerator : IGenerator
 
     public void Generate(Level[,] map)
     {
-        int lastRow = levelInfo.rows - 1;
-        int lastColumn = levelInfo.columns - 1;
-
-        List<Vector2> emptyLocationsAboveGround = new List<Vector2>();
-
-        for (int r = lastRow - levelInfo.minGroundHeight; r > 0; r--)
-        {
-            for (int c = 0; c < lastColumn; c++)
-            {
-                if (r > 0 && map[r, c] == Level.GROUND && map[r - 1, c] == Level.EMPTY)
-                {
-                    emptyLocationsAboveGround.Add(new Vector2(c, r - 1));
-                }
-            }
-        }
+        List<Vector2> emptyLocationsAboveGround = ExtensionMethods.MyExtensions.FindEmptyLocationsAboveGround(map);
 
         Vector2 randomLocation = emptyLocationsAboveGround[Random.Range(0, emptyLocationsAboveGround.Count - 1)];
 

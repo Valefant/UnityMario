@@ -21,5 +21,23 @@ namespace ExtensionMethods
         {
             return new Vector3(x * width, y * height, z * depth);
         }
+
+        public static List<Vector2> FindEmptyLocationsAboveGround(Level[,] map)
+        {
+            List<Vector2> emptyLocationsAboveGround = new List<Vector2>();
+
+            for (int r = map.GetLength(0); r > 0; r--)
+            {
+                for (int c = 0; c < map.GetLength(1); c++)
+                {
+                    if (r > 0 && map[r, c] == Level.GROUND && map[r - 1, c] == Level.EMPTY)
+                    {
+                        emptyLocationsAboveGround.Add(new Vector2(c, r - 1));
+                    }
+                }
+            }
+
+            return emptyLocationsAboveGround;
+        }
     }
 }

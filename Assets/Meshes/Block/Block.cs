@@ -16,15 +16,6 @@ public class Block : MonoBehaviour
     public float width = 1f;
     public float depth = 1f;
 
-    private Dictionary<Level, string> blockTypeToFilename = new Dictionary<Level, string>()
-    {
-        { Level.BRICK_BLOCK, "brick" },
-        { Level.QUESTION_MARK_BLOCK, "question mark" },
-        { Level.EXCLAMATION_RED_BLOCK, "exclamation red" },
-        { Level.EXCLAMATION_GREEN_BLOCK, "exclamation green" },
-        { Level.EXCLAMATION_BLUE_BLOCK, "exclamation blue" },
-    };
-
     public String blocktype = "Brick";
 
     Vector3 P0, P1, P2, P3, P4, P5, P6, P7;
