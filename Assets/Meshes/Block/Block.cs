@@ -4,15 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public enum BLOCK_TYPE
-{
-    BRICK,
-    QUESTION_MARK,
-    EXCLAMATION_RED,
-    EXCLAMATION_GREEN,
-    EXCLAMATION_BLUE,
-}
-
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class Block : MonoBehaviour
 {
@@ -25,13 +16,13 @@ public class Block : MonoBehaviour
     public float width = 1f;
     public float depth = 1f;
 
-    private Dictionary<BLOCK_TYPE, string> blockTypeToFilename = new Dictionary<BLOCK_TYPE, string>()
+    private Dictionary<Blocktype, string> blockTypeToFilename = new Dictionary<Blocktype, string>()
     {
-        { BLOCK_TYPE.BRICK, "brick" },
-        { BLOCK_TYPE.QUESTION_MARK, "question mark" },
-        { BLOCK_TYPE.EXCLAMATION_RED, "exclamation red" },
-        { BLOCK_TYPE.EXCLAMATION_GREEN, "exclamation green" },
-        { BLOCK_TYPE.EXCLAMATION_BLUE, "exclamation blue" },
+        { Blocktype.BRICK, "brick" },
+        { Blocktype.QUESTION_MARK, "question mark" },
+        { Blocktype.EXCLAMATION_RED, "exclamation red" },
+        { Blocktype.EXCLAMATION_GREEN, "exclamation green" },
+        { Blocktype.EXCLAMATION_BLUE, "exclamation blue" },
     };
 
     public String blocktype = "Brick";
