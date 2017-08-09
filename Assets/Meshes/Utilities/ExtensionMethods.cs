@@ -26,7 +26,7 @@ namespace ExtensionMethods
         {
             List<Vector2> emptyLocationsAboveGround = new List<Vector2>();
 
-            for (int r = map.GetLength(0); r > 0; r--)
+            for (int r = map.GetLength(0) - 1; r > 0; r--)
             {
                 for (int c = 0; c < map.GetLength(1); c++)
                 {
