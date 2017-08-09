@@ -1,4 +1,4 @@
 ﻿public interface IGenerator
 {
-    void Generate(int[,] map);
+    void Generate(Level[,] map);
 }

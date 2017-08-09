@@ -7,7 +7,7 @@
         this.levelInfo = levelInfo;
     }
 
-    public void Generate(int[,] map)
+    public void Generate(Level[,] map)
     {
 
     }

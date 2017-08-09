@@ -16,13 +16,13 @@ public class Block : MonoBehaviour
     public float width = 1f;
     public float depth = 1f;
 
-    private Dictionary<Blocktype, string> blockTypeToFilename = new Dictionary<Blocktype, string>()
+    private Dictionary<Level, string> blockTypeToFilename = new Dictionary<Level, string>()
     {
-        { Blocktype.BRICK, "brick" },
-        { Blocktype.QUESTION_MARK, "question mark" },
-        { Blocktype.EXCLAMATION_RED, "exclamation red" },
-        { Blocktype.EXCLAMATION_GREEN, "exclamation green" },
-        { Blocktype.EXCLAMATION_BLUE, "exclamation blue" },
+        { Level.BRICK_BLOCK, "brick" },
+        { Level.QUESTION_MARK_BLOCK, "question mark" },
+        { Level.EXCLAMATION_RED_BLOCK, "exclamation red" },
+        { Level.EXCLAMATION_GREEN_BLOCK, "exclamation green" },
+        { Level.EXCLAMATION_BLUE_BLOCK, "exclamation blue" },
     };
 
     public String blocktype = "Brick";

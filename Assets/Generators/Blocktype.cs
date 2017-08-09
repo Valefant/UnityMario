@@ -1,8 +1,0 @@
-﻿public enum Blocktype
-{
-    BRICK,
-    QUESTION_MARK,
-    EXCLAMATION_RED,
-    EXCLAMATION_GREEN,
-    EXCLAMATION_BLUE
-}
