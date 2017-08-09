@@ -3,6 +3,7 @@
 public class GroundGenerator : IGenerator
 {
     LevelInfo levelInfo;
+    public int lastGroundHeight = -1;
 
     public GroundGenerator(LevelInfo levelInfo)
     {
@@ -14,27 +15,36 @@ public class GroundGenerator : IGenerator
         int lastRow = levelInfo.rows - 1;
         int lastColumn = levelInfo.columns - 1;
 
-        int maxGroundHeight = levelInfo.rows - levelInfo.playerHeight - levelInfo.maxJumpHeight;
+        int maxGroundHeight = levelInfo.rows - levelInfo.playerHeight - levelInfo.maxJumpHeight - 1;
 
-        float gapProbability = Random.Range(0f, 1f);
-
-        // int minGroundCount = levelInfo.columns / levelInfo.maxJumpLength;
-        // int maxGroundCount = levelInfo.columns;
-
-        // int groundCount = Random.Range(minGroundCount, maxGroundCount);
-
+        int groundCount = levelInfo.columns / levelInfo.minGroundLength;
         int groundLengthOffset = 0;
 
-        // Vector2 groundBlock = new Vector2(0, 0);
+        int currentGroundHeight = Random.Range(levelInfo.minGroundHeight, maxGroundHeight);
 
-        int lastGroundHeight = 0;
-
-        for (int g = 0; g < 10; g++)
+        if (lastGroundHeight > 0)
         {
-            int groundHeight = Random.Range(levelInfo.minGroundHeight, lastGroundHeight + levelInfo.maxJumpHeight);
+            currentGroundHeight = Random.Range(lastGroundHeight, lastGroundHeight + levelInfo.maxJumpHeight);
+        }
+
+        for (int g = 0; g < groundCount; g++)
+        {
+            float gapProbability = Random.Range(0f, 1f);
+            float heightProbability = Random.Range(0f, 1f);
+            float steepProbability = Random.Range(0f, 1f);
+
+            int minGroundHeight = steepProbability >= levelInfo.steepProbability ? currentGroundHeight : levelInfo.minGroundHeight; 
+
+            int groundHeight = Random.Range(minGroundHeight, currentGroundHeight + levelInfo.maxJumpHeight);
+
+            if (groundHeight > maxGroundHeight)
+            {
+                groundHeight = maxGroundHeight;
+            }
+
             int groundLength = Random.Range(levelInfo.minGroundLength, levelInfo.maxGroundLength);
 
-            if (1 - gapProbability < levelInfo.gapProbability)
+            if (g > 0 && g < (groundCount - 1) && 1 - gapProbability < levelInfo.gapProbability)
             {
                 groundLengthOffset += levelInfo.maxJumpLength;
                 continue;
@@ -58,7 +68,9 @@ public class GroundGenerator : IGenerator
 
             groundLengthOffset += groundLength;
 
-            lastGroundHeight = groundHeight;
+            currentGroundHeight = groundHeight;
         }
+
+        lastGroundHeight = currentGroundHeight;
     }
 }

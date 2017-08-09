@@ -9,4 +9,5 @@
     public int minGroundLength;
     public int maxGroundLength;
     public float gapProbability;
+    public float steepProbability;
 }

@@ -4,15 +4,16 @@ using System.Text;
 
 public class LevelProcessor : MonoBehaviour
 {
-    public int columns = 50;
+    public int columns = 60;
     public int rows = 20;
     public int playerHeight = 1;
-    public int maxJumpHeight = 1;
+    public int maxJumpHeight = 3;
     public int maxJumpLength = 1;
-    public int minGroundHeight = 2;
-    public int minGroundLength = 3;
+    public int minGroundHeight = 4;
+    public int minGroundLength = 4;
     public int maxGroundLength = 10;
-    public float gapProbability = 0.1f;
+    public float gapProbability = 0.2f;
+    public float steepProbability = 0.5f;
 
     public void Reset()
     {
@@ -48,6 +49,7 @@ public class LevelProcessor : MonoBehaviour
         levelInfo.minGroundLength = minGroundLength;
         levelInfo.maxGroundLength = maxGroundLength;
         levelInfo.gapProbability = gapProbability;
+        levelInfo.steepProbability = steepProbability;
 
         GroundGenerator groundGenerator = new GroundGenerator(levelInfo);
         ObstacleGenerator obstacleGenerator = new ObstacleGenerator(levelInfo);
