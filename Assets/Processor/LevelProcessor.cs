@@ -14,6 +14,7 @@ public class LevelProcessor : MonoBehaviour
     public int maxGroundLength = 10;
     public float gapProbability = 0.2f;
     public float steepProbability = 0.5f;
+    public float blockProbability = 0.3f;
 
     public void Reset()
     {
@@ -50,6 +51,7 @@ public class LevelProcessor : MonoBehaviour
         levelInfo.maxGroundLength = maxGroundLength;
         levelInfo.gapProbability = gapProbability;
         levelInfo.steepProbability = steepProbability;
+        levelInfo.blockProbability = blockProbability;
 
         GroundGenerator groundGenerator = new GroundGenerator(levelInfo);
         ObstacleGenerator obstacleGenerator = new ObstacleGenerator(levelInfo);
