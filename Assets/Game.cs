@@ -43,10 +43,20 @@ namespace Assets
 			Vector3 localPosition = camera.transform.localPosition;
 			localPosition.x = 10;
 			camera.transform.localPosition = localPosition;
-			#endregion
+            #endregion
+
+            #region Skybox and Music
+            Material m = Resources.Load("CloudyCrownMidday", typeof(Material)) as Material;
+            Debug.Log("Matieral-Name: " + m.name);
+            RenderSettings.skybox = m;
+
+            AudioSource audio = gameObject.AddComponent<AudioSource>();
+            AudioClip vv = Resources.Load("Songs/Super Mario Bros. medley") as AudioClip;
+            audio.PlayOneShot(vv);
+            #endregion
         }
 
-		void Update()
+        void Update()
 		{
 			Debug.Log ("Character Position: " + characterTransform.position);
 
