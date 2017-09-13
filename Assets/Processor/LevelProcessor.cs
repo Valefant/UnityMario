@@ -257,7 +257,7 @@ public class LevelProcessor : MonoBehaviour
 
 		if (startingPosition == Vector3.zero)
 		{
-			startingPosition = new Vector3(Random.Range(0, GroundWidth / 2), GroundHeight + 1, 0.5f);
+			startingPosition = new Vector3(Random.Range(1, GroundWidth / 2), GroundHeight + 1, 0.5f);
 		}	
     }
 

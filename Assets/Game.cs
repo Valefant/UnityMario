@@ -34,10 +34,11 @@ namespace Assets
 
 			Camera camera = this.GetComponent<Camera> ();
 			camera.transform.parent = go.transform;
-			// Vector3 cameraPosition = camera.transform.position;
-			// cameraPosition.x = 10;
-			// camera.transform.position = cameraPosition;
-            #endregion
+			Vector3 localPosition = camera.transform.localPosition;
+			localPosition.x = 10;
+			camera.transform.localPosition = localPosition;
+			Debug.Log("ctp: " + camera.transform.position);
+			#endregion
         }
     }
 }
