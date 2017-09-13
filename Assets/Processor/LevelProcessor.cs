@@ -26,6 +26,7 @@ public class LevelProcessor : MonoBehaviour
 
     public void ProcessLevel()
     {
+        Debug.Log("ProcessLevel");
         List<IGenerator> generators = new List<IGenerator>();
         AddGenerators(generators);
 
@@ -230,6 +231,9 @@ public class LevelProcessor : MonoBehaviour
         transform.position = new Vector2(StartPosition, 0);
 
         ground.transform.parent = this.transform;
+
+        BoxCollider boxCollider = ground.AddComponent<BoxCollider>();
+
         leftWorld.Add(ground);
     }
 
@@ -289,6 +293,7 @@ public class LevelProcessor : MonoBehaviour
 
         block.transform.position = new Vector3(c, r, 0);
         block.transform.parent = this.transform;
+        BoxCollider boxCollider = block.AddComponent<BoxCollider>();
 
         rightWorld.Add(block);
     }
