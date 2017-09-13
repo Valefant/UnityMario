@@ -3,7 +3,7 @@
 public class GroundGenerator : IGenerator
 {
     LevelInfo levelInfo;
-    public int lastGroundHeight = -1;
+    public static int lastGroundHeight = -1;
 
     public GroundGenerator(LevelInfo levelInfo)
     {
