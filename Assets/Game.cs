@@ -31,6 +31,12 @@ namespace Assets
             go.position = lpObj.startingPosition;
             go.rotation = Quaternion.AngleAxis(90, new Vector3(0,1,0));
             Debug.Log("starting position = " + lpObj.startingPosition);
+
+			Camera camera = this.GetComponent<Camera> ();
+			camera.transform.parent = go.transform;
+			// Vector3 cameraPosition = camera.transform.position;
+			// cameraPosition.x = 10;
+			// camera.transform.position = cameraPosition;
             #endregion
         }
     }
