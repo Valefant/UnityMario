@@ -16,7 +16,7 @@ public class LevelProcessor : MonoBehaviour
     public float gapProbability = 0.2f;
     public float steepProbability = 0.5f;
     public float blockProbability = 0.35f;
-	public Vector2 startingPosition;
+	public Vector3 startingPosition = Vector3.zero;
 
     private List<GameObject> leftWorld = new List<GameObject>();
     private List<GameObject> rightWorld = new List<GameObject>();
@@ -255,9 +255,9 @@ public class LevelProcessor : MonoBehaviour
 
         leftWorld.Add(ground);
 
-		if (startingPosition == null)
+		if (startingPosition == Vector3.zero)
 		{
-			startingPosition = new Vector2(Random.Range(0, GroundWidth / 2), GroundHeight + 1);
+			startingPosition = new Vector3(Random.Range(0, GroundWidth / 2), GroundHeight + 1, 0.5f);
 		}	
     }
 

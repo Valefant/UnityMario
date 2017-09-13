@@ -20,9 +20,9 @@ namespace Assets
             GameObject levelProcessor = new GameObject();
             var lpObj = levelProcessor.AddComponent<LevelProcessor>();
             lpObj.ProcessLevel();
-            
             #endregion
 
+			transform.position = lpObj.startingPosition;
 
             #region Character
             var go = Instantiate(characterPrefab, transform.position, transform.rotation);
