@@ -27,16 +27,18 @@ namespace Assets
             #region Character
             var go = Instantiate(characterPrefab, transform.position, transform.rotation);
             SimpleCharacterControl sCC = go.GetComponent<SimpleCharacterControl>();
-            sCC.m_jumpForce = lpObj.maxJumpHeight * 2; // TODO: Find right multiply and maybe addition
+            sCC.m_jumpForce = lpObj.maxJumpHeight * 3; // TODO: Find right multiply and maybe addition
+            sCC.m_moveSpeed = 4;
             go.position = lpObj.startingPosition;
             go.rotation = Quaternion.AngleAxis(90, new Vector3(0,1,0));
             Debug.Log("starting position = " + lpObj.startingPosition);
 
 			Camera camera = this.GetComponent<Camera> ();
+
 			camera.transform.parent = go.transform;
-			// Vector3 cameraPosition = camera.transform.position;
-			// cameraPosition.x = 10;
-			// camera.transform.position = cameraPosition;
+            // Vector3 cameraPosition = camera.transform.position;
+            // cameraPosition.x = 10;
+            // camera.transform.position = cameraPosition;
             #endregion
         }
     }
