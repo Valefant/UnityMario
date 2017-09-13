@@ -17,6 +17,7 @@ public class LevelProcessor : MonoBehaviour
     public float steepProbability = 0.5f;
     public float blockProbability = 0.35f;
 	public Vector3 startingPosition = Vector3.zero;
+	public int levelCount = 0;
 
     private List<GameObject> leftWorld = new List<GameObject>();
     private List<GameObject> rightWorld = new List<GameObject>();
@@ -55,6 +56,8 @@ public class LevelProcessor : MonoBehaviour
 
         // DebugMap(map);
         DrawMap(map);
+
+		levelCount++;
     }
 
     void AddGenerators(List<IGenerator> generators)
@@ -118,7 +121,7 @@ public class LevelProcessor : MonoBehaviour
 
     void DrawMap(Level[,] map)
     {
-        DestroyOldWorld();
+        // DestroyOldWorld();
         ChangeRightToLeftWorld();
 
 
