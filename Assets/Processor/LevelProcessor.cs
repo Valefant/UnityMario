@@ -16,7 +16,7 @@ public class LevelProcessor : MonoBehaviour
     public float gapProbability = 0.2f;
     public float steepProbability = 0.5f;
     public float blockProbability = 0.35f;
-	public Vector2 startingPosition = Vector2.zero;
+	public Vector3 startingPosition = Vector3.zero;
 
     private List<GameObject> leftWorld = new List<GameObject>();
     private List<GameObject> rightWorld = new List<GameObject>();
@@ -37,9 +37,13 @@ public class LevelProcessor : MonoBehaviour
 
     public void ProcessLevel()
     {
-		if (generators.Count <= 0) {
-			AddGenerators(generators);
-		}
+        Debug.Log("ProcessLevel");
+        List<IGenerator> generators = new List<IGenerator>();
+        AddGenerators(generators);
+        
+		    if (generators.Count <= 0) {
+			    AddGenerators(generators);
+		    }
 
         Level[,] map = new Level[rows, columns];
         InitializeMap(map);
@@ -246,12 +250,14 @@ public class LevelProcessor : MonoBehaviour
         transform.position = new Vector2(StartPosition, 0);
 
         ground.transform.parent = this.transform;
+
+        BoxCollider boxCollider = ground.AddComponent<BoxCollider>();
+
         leftWorld.Add(ground);
 
-		if (startingPosition == Vector2.zero)
+		if (startingPosition == Vector3.zero)
 		{
-            Debug.Log("set starting position");
-			startingPosition = new Vector2(Random.Range(0, GroundWidth / 2), GroundHeight + 1);
+			startingPosition = new Vector3(Random.Range(0, GroundWidth / 2), GroundHeight + 1, 0.5f);
 		}	
     }
 
@@ -311,6 +317,7 @@ public class LevelProcessor : MonoBehaviour
 
 		block.transform.position = new Vector3(c + columnPosition, r, 0);
         block.transform.parent = this.transform;
+        BoxCollider boxCollider = block.AddComponent<BoxCollider>();
 
         rightWorld.Add(block);
     }
