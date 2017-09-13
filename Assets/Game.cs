@@ -50,10 +50,25 @@ namespace Assets
 		{
 			Debug.Log ("Character Position: " + characterTransform.position);
 
-			if (characterTransform.position.x >= (lpObj.columns * lpObj.levelCount * 0.75))
+			if (characterTransform.position.x >= (lpObj.columns * lpObj.levelCount - 10))
 			{
 				lpObj.ProcessLevel();
+
+				if (lpObj.levelContainers.Count >= 6)
+				{
+					foreach (List<GameObject> level in lpObj.levelContainers.GetRange (0, 2))
+					{
+						foreach (GameObject gameObject in level)
+						{
+							Destroy (gameObject);
+						}	
+					}
+
+					lpObj.levelContainers.RemoveRange(0, 2);
+				}
 			}
+
+			Debug.Log (lpObj.levelContainers.Count);
 		}
     }
 }

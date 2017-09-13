@@ -4,7 +4,7 @@ using System.Text;
 
 public class LevelProcessor : MonoBehaviour
 {
-    public int columns = 50;
+    public int columns = 30;
     public int rows = 20;
     public int playerHeight = 1;
     public int maxJumpHeight = 3;
@@ -19,8 +19,7 @@ public class LevelProcessor : MonoBehaviour
 	public Vector3 startingPosition = Vector3.zero;
 	public int levelCount = 0;
 
-    private List<GameObject> leftWorld = new List<GameObject>();
-    private List<GameObject> rightWorld = new List<GameObject>();
+	public List<List<GameObject>> levelContainers = new List<List<GameObject>>();
 	private List<IGenerator> generators = new List<IGenerator>();
 
     public void Reset()
@@ -121,28 +120,13 @@ public class LevelProcessor : MonoBehaviour
 
     void DrawMap(Level[,] map)
     {
-        // DestroyOldWorld();
-        ChangeRightToLeftWorld();
-
-
-        // build new rightWorld 
-        BuildRightGround(map);
+        BuildGround(map);
     }
+		
+    void BuildGround(Level[,] map)
+    {
+		List<GameObject> levelContainer = new List<GameObject> ();
 
-    void DestroyOldWorld()
-    {
-        for (int i = 0; i < leftWorld.Count; i++)
-        {
-            Destroy(leftWorld[i]);
-        }
-    }
-
-    void ChangeRightToLeftWorld()
-    {
-        leftWorld = rightWorld;
-    }
-    void BuildRightGround(Level[,] map)
-    {
         int GroundHeight = 0, LastGroundHeight = 0;
         int GroundWidth = 0;
 		int StartPosition = columnPosition;
@@ -151,24 +135,11 @@ public class LevelProcessor : MonoBehaviour
 
         for (int x = 0; x < map.GetLength(1); x++)
         {
-            // Debug.Log("X = " + (x));
-
-            //if(map[map.GetLength(0) - 1, x] == Level.GROUND)
-            //{
-            //    Debug.Log(string.Format("Position = {0}; GroundWeidth = {1}; GroundHeight = {2}", StartPosition, GroundWidth, GroundHeight));
-            //    CreateGround(StartPosition, GroundWidth - 1, LastGroundHeight);
-            //    LastGroundHeight = GroundHeight;
-            //    GroundHeight = 0;
-            //    GroundWidth = 1;
-            //    continue;
-            //}
-
-
             if (map[map.GetLength(0) - 1, x] == Level.EMPTY)
             {
                 // Debug.Log(string.Format("Position = {0}; GroundWeidth = {1}; GroundHeight = {2}", StartPosition, GroundWidth, GroundHeight));
                 // Debug.Log(string.Format("X = {0}", x));
-                CreateGround(StartPosition, GroundWidth, LastGroundHeight);
+				CreateGround(StartPosition, GroundWidth, LastGroundHeight, levelContainer);
                 LastGroundHeight = 0;
                 GroundHeight = 0;
                 GroundWidth = 0;
@@ -199,7 +170,7 @@ public class LevelProcessor : MonoBehaviour
                         // and start with the next one
 
                         // Debug.Log(string.Format("Position = {0}; GroundWeidth = {1}; GroundHeight = {2}", StartPosition, GroundWidth, GroundHeight));
-                        CreateGround(StartPosition, GroundWidth, LastGroundHeight);
+						CreateGround(StartPosition, GroundWidth, LastGroundHeight, levelContainer);
                         LastGroundHeight = GroundHeight;
                         GroundHeight = 0;
                         GroundWidth = 0;
@@ -217,28 +188,30 @@ public class LevelProcessor : MonoBehaviour
                 GroundHeight = 0;
             }
         }
-        CreateGround(StartPosition, GroundWidth, LastGroundHeight);
+		CreateGround(StartPosition, GroundWidth, LastGroundHeight, levelContainer);
 
-        BuildBlockTypes(map);
+		BuildBlockTypes(map, levelContainer);
 
 		columnPosition += columns;
 
 		Debug.Log ("Startposition: " + StartPosition);
+
+		levelContainers.Add (levelContainer);
     }
 
 
-    private void BuildBlockTypes(Level[,] map)
+	private void BuildBlockTypes(Level[,] map, List<GameObject> levelContainer)
     {
         for (int y = 0; y < map.GetLength(0); y++)
         {
             for (int x = 0; x < map.GetLength(1); x++)
             {
-                IfBlockTypeCreate(map[y,x],(map.GetLength(0)-y)-1, x);
+				IfBlockTypeCreate(map[y,x],(map.GetLength(0)-y)-1, x, levelContainer);
             }
         }
     }
 
-    private void CreateGround(int StartPosition, int GroundWidth, int GroundHeight)
+	private void CreateGround(int StartPosition, int GroundWidth, int GroundHeight, List<GameObject> levelContainer)
     {
         GameObject ground = new GameObject();
 
@@ -256,15 +229,15 @@ public class LevelProcessor : MonoBehaviour
 
         BoxCollider boxCollider = ground.AddComponent<BoxCollider>();
 
-        leftWorld.Add(ground);
-
 		if (startingPosition == Vector3.zero)
 		{
 			startingPosition = new Vector3(Random.Range(1, GroundWidth / 2), GroundHeight + 1, 0.5f);
-		}	
+		}
+
+		levelContainer.Add (ground);
     }
 
-    private void IfBlockTypeCreate(Level level, int r, int c)
+	private void IfBlockTypeCreate(Level level, int r, int c, List<GameObject> levelContainer)
     {
         List<Level> blockTypes = new List<Level>
         {
@@ -277,11 +250,11 @@ public class LevelProcessor : MonoBehaviour
 
         if (blockTypes.Contains(level))
         {
-            CreateBlockType(level, r, c);
+			CreateBlockType(level, r, c, levelContainer);
         }
     }
 
-    private void CreateBlockType(Level level, int r, int c)
+	private void CreateBlockType(Level level, int r, int c, List<GameObject> levelContainer)
     {
         GameObject block = new GameObject();
         block.AddComponent<Block>();
@@ -322,7 +295,7 @@ public class LevelProcessor : MonoBehaviour
         block.transform.parent = this.transform;
         BoxCollider boxCollider = block.AddComponent<BoxCollider>();
 
-        rightWorld.Add(block);
+		levelContainer.Add (block);
     }
 
     private void IfItemCreate(Level level, int r, int c)
@@ -339,8 +312,6 @@ public class LevelProcessor : MonoBehaviour
 
             star.transform.position = new Vector3(c, r, 0);
             star.transform.parent = this.transform;
-
-            rightWorld.Add(star);
         }
     }
 }
