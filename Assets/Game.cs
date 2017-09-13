@@ -29,7 +29,7 @@ namespace Assets
             SimpleCharacterControl sCC = go.GetComponent<SimpleCharacterControl>();
             sCC.m_jumpForce = lpObj.maxJumpHeight * 2; // TODO: Find right multiply and maybe addition
             go.position = lpObj.startingPosition;
-            go.rotation = new Quaternion(0, 90, 0, 0);
+            go.rotation = Quaternion.AngleAxis(90, new Vector3(0,1,0));
             Debug.Log("starting position = " + lpObj.startingPosition);
             #endregion
         }
