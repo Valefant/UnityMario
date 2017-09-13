@@ -37,9 +37,13 @@ public class LevelProcessor : MonoBehaviour
 
     public void ProcessLevel()
     {
-		if (generators.Count <= 0) {
-			AddGenerators(generators);
-		}
+        Debug.Log("ProcessLevel");
+        List<IGenerator> generators = new List<IGenerator>();
+        AddGenerators(generators);
+        
+		    if (generators.Count <= 0) {
+			    AddGenerators(generators);
+		    }
 
         Level[,] map = new Level[rows, columns];
         InitializeMap(map);
@@ -246,6 +250,9 @@ public class LevelProcessor : MonoBehaviour
         transform.position = new Vector2(StartPosition, 0);
 
         ground.transform.parent = this.transform;
+
+        BoxCollider boxCollider = ground.AddComponent<BoxCollider>();
+
         leftWorld.Add(ground);
 
 		if (startingPosition == null)
@@ -310,6 +317,7 @@ public class LevelProcessor : MonoBehaviour
 
 		block.transform.position = new Vector3(c + columnPosition, r, 0);
         block.transform.parent = this.transform;
+        BoxCollider boxCollider = block.AddComponent<BoxCollider>();
 
         rightWorld.Add(block);
     }
