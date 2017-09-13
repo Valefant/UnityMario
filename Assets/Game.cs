@@ -28,6 +28,9 @@ namespace Assets
             var go = Instantiate(characterPrefab, transform.position, transform.rotation);
             SimpleCharacterControl sCC = go.GetComponent<SimpleCharacterControl>();
             sCC.m_jumpForce = lpObj.maxJumpHeight * 2; // TODO: Find right multiply and maybe addition
+            go.position = lpObj.startingPosition;
+            go.rotation = new Quaternion(0, 90, 0, 0);
+            Debug.Log("starting position = " + lpObj.startingPosition);
             #endregion
         }
     }
