@@ -52,7 +52,11 @@ namespace Assets
 
             AudioSource audio = gameObject.AddComponent<AudioSource>();
             AudioClip vv = Resources.Load("Songs/Super Mario Bros. medley") as AudioClip;
-            audio.PlayOneShot(vv);
+
+            audio.clip = vv;
+            audio.loop = true;
+            audio.volume = 0.1f;
+            audio.Play();
             #endregion
         }
 
