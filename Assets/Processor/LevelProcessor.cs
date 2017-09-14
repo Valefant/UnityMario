@@ -191,7 +191,7 @@ public class LevelProcessor : MonoBehaviour
 		CreateGround(StartPosition, GroundWidth, LastGroundHeight, levelContainer);
 
 		BuildBlockTypes(map, levelContainer);
-
+		PlaceCoins (map, levelContainer);
 		columnPosition += columns;
 
 		Debug.Log ("Startposition: " + StartPosition);
@@ -210,6 +210,25 @@ public class LevelProcessor : MonoBehaviour
             }
         }
     }
+
+	private void PlaceCoins(Level[,] map, List<GameObject> levelContainer)
+	{
+		for (int y = 0; y < map.GetLength(0); y++)
+		{
+			for (int x = 0; x < map.GetLength(1); x++)
+			{
+				if (map [y, x] == Level.COIN)
+				{
+					var cube = GameObject.CreatePrimitive (PrimitiveType.Cube);
+					cube.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+					cube.AddComponent<Rotator> ();
+					cube.transform.position = new Vector3 (x, y, 0.5f);
+					cube.tag = "pickup";
+					levelContainer.Add (cube);
+				}	
+			}
+		}
+	}
 
 	private void CreateGround(int StartPosition, int GroundWidth, int GroundHeight, List<GameObject> levelContainer)
     {
