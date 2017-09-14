@@ -15,7 +15,7 @@ namespace Assets
 		public Transform characterTransform;
 
 
-        void Start()
+        public void Start()
         {
             Debug.Log("---------- Start ----------");
             Debug.Log("----                   ----");
@@ -52,33 +52,37 @@ namespace Assets
 
             AudioSource audio = gameObject.AddComponent<AudioSource>();
             AudioClip vv = Resources.Load("Songs/Super Mario Bros. medley") as AudioClip;
-            audio.PlayOneShot(vv);
+
+            audio.clip = vv;
+            audio.loop = true;
+            audio.volume = 0.1f;
+            audio.Play();
             #endregion
         }
 
         void Update()
-		{
-			Debug.Log ("Character Position: " + characterTransform.position);
+        {
+            Debug.Log("Character Position: " + characterTransform.position);
 
-			if (characterTransform.position.x >= (lpObj.columns * lpObj.levelCount - 10))
-			{
-				lpObj.ProcessLevel();
+            if (characterTransform.position.x >= (lpObj.columns * lpObj.levelCount - 10))
+            {
+                lpObj.ProcessLevel();
 
-				if (lpObj.levelContainers.Count >= 6)
-				{
-					foreach (List<GameObject> level in lpObj.levelContainers.GetRange (0, 2))
-					{
-						foreach (GameObject gameObject in level)
-						{
-							Destroy (gameObject);
-						}	
-					}
+                if (lpObj.levelContainers.Count >= 6)
+                {
+                    foreach (List<GameObject> level in lpObj.levelContainers.GetRange(0, 2))
+                    {
+                        foreach (GameObject gameObject in level)
+                        {
+                            Destroy(gameObject);
+                        }
+                    }
 
-					lpObj.levelContainers.RemoveRange(0, 2);
-				}
-			}
+                    lpObj.levelContainers.RemoveRange(0, 2);
+                }
+            }
 
-			Debug.Log (lpObj.levelContainers.Count);
-		}
+            Debug.Log(lpObj.levelContainers.Count);
+        }
     }
 }
