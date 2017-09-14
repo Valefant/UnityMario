@@ -223,7 +223,7 @@ public class LevelProcessor : MonoBehaviour
 					cube.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
 					cube.AddComponent<Rotator> ();
 					cube.transform.position = new Vector3 (x, y, 0.5f);
-					cube.tag = "pickup";
+					// cube.tag = "Collectable";
 					levelContainer.Add (cube);
 				}	
 			}
