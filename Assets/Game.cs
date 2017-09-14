@@ -64,6 +64,11 @@ namespace Assets
         {
             Debug.Log("Character Position: " + characterTransform.position);
 
+			if (characterTransform.position.y <= 0)
+			{
+				Application.LoadLevel (Application.loadedLevel);
+			}
+
             if (characterTransform.position.x >= (lpObj.columns * lpObj.levelCount - 10))
             {
                 lpObj.ProcessLevel();

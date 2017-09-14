@@ -16,6 +16,6 @@ public class ItemGenerator : IGenerator
         List<Vector2> emptyLocationsAboveGround = ExtensionMethods.MyExtensions.FindEmptyLocationsAboveGround(map);
         Vector2 randomLocation = emptyLocationsAboveGround[Random.Range(0, emptyLocationsAboveGround.Count - 1)];
 
-        map[(int) randomLocation.y, (int) randomLocation.x] = Level.STAR;
+		map[(int) randomLocation.y, (int) randomLocation.x] = Level.COIN;
     }
 }
