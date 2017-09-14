@@ -34,8 +34,17 @@ public class SimpleCharacterControl : MonoBehaviour {
     private bool m_isGrounded;
     private List<Collider> m_collisions = new List<Collider>();
 
+	public int points = 0;
+
     private void OnCollisionEnter(Collision collision)
     {
+		if (collision.gameObject.name.ToLower().Contains("cube"))
+		{
+			points++;
+			Destroy (collision.gameObject);
+			Debug.Log ("Points: " + points);
+		}
+
         ContactPoint[] contactPoints = collision.contacts;
         for(int i = 0; i < contactPoints.Length; i++)
         {
