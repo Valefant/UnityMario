@@ -3432,6 +3432,7 @@ MonoBehaviour:
   steepProbability: 0.5
   blockProbability: 0.35
   startingPosition: {x: 0, y: 0, z: 0}
+  levelCount: 0
 --- !u!4 &931128121
 Transform:
   m_ObjectHideFlags: 0
@@ -4705,6 +4706,7 @@ GameObject:
   - component: {fileID: 1385759713}
   - component: {fileID: 1385759712}
   - component: {fileID: 1385759717}
+  - component: {fileID: 1385759718}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4795,6 +4797,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterPrefab: {fileID: 4549428611729446, guid: 0e74cf81e6fd82546b4797f71ceffb81,
     type: 2}
+  lpObj: {fileID: 0}
+  characterTransform: {fileID: 0}
+--- !u!45 &1385759718
+Skybox:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1385759711}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 0}
 --- !u!43 &1386495625
 Mesh:
   m_ObjectHideFlags: 0
