@@ -19,20 +19,12 @@ public class LevelProcessor : MonoBehaviour
 	public Vector3 startingPosition = Vector3.zero;
 	public int levelCount = 0;
 
-	public List<List<GameObject>> levelContainers = new List<List<GameObject>>();
+	public List<List<GameObject>> levelSections = new List<List<GameObject>>();
 	private List<IGenerator> generators = new List<IGenerator>();
 
     public void Reset()
     {
         ProcessLevel();
-		Debug.Log ("Last gh: " + GroundGenerator.lastGroundHeight);
-		ProcessLevel();
-		Debug.Log ("Last gh: " + GroundGenerator.lastGroundHeight);
-		ProcessLevel();
-		Debug.Log ("Last gh: " + GroundGenerator.lastGroundHeight);
-		ProcessLevel();
-		Debug.Log ("Last gh: " + GroundGenerator.lastGroundHeight);
-		ProcessLevel();
     }
 
     public void ProcessLevel()
@@ -53,7 +45,7 @@ public class LevelProcessor : MonoBehaviour
             generator.Generate(map);
         }
 
-        // DebugMap(map);
+        DebugMap(map);
         DrawMap(map);
 
 		levelCount++;
@@ -125,7 +117,7 @@ public class LevelProcessor : MonoBehaviour
 		
     void BuildGround(Level[,] map)
     {
-		List<GameObject> levelContainer = new List<GameObject> ();
+		List<GameObject> levelSection = new List<GameObject> ();
 
         int GroundHeight = 0, LastGroundHeight = 0;
         int GroundWidth = 0;
@@ -139,7 +131,7 @@ public class LevelProcessor : MonoBehaviour
             {
                 // Debug.Log(string.Format("Position = {0}; GroundWeidth = {1}; GroundHeight = {2}", StartPosition, GroundWidth, GroundHeight));
                 // Debug.Log(string.Format("X = {0}", x));
-				CreateGround(StartPosition, GroundWidth, LastGroundHeight, levelContainer);
+				CreateGround(StartPosition, GroundWidth, LastGroundHeight, levelSection);
                 LastGroundHeight = 0;
                 GroundHeight = 0;
                 GroundWidth = 0;
@@ -170,7 +162,7 @@ public class LevelProcessor : MonoBehaviour
                         // and start with the next one
 
                         // Debug.Log(string.Format("Position = {0}; GroundWeidth = {1}; GroundHeight = {2}", StartPosition, GroundWidth, GroundHeight));
-						CreateGround(StartPosition, GroundWidth, LastGroundHeight, levelContainer);
+						CreateGround(StartPosition, GroundWidth, LastGroundHeight, levelSection);
                         LastGroundHeight = GroundHeight;
                         GroundHeight = 0;
                         GroundWidth = 0;
@@ -188,30 +180,30 @@ public class LevelProcessor : MonoBehaviour
                 GroundHeight = 0;
             }
         }
-		CreateGround(StartPosition, GroundWidth, LastGroundHeight, levelContainer);
+		CreateGround(StartPosition, GroundWidth, LastGroundHeight, levelSection);
 
-		BuildBlockTypes(map, levelContainer);
-		PlaceCoins (map, levelContainer);
+		BuildBlockTypes(map, levelSection);
+		PlaceCoins (map, levelSection);
 		columnPosition += columns;
 
 		Debug.Log ("Startposition: " + StartPosition);
 
-		levelContainers.Add (levelContainer);
+		levelSections.Add (levelSection);
     }
 
 
-	private void BuildBlockTypes(Level[,] map, List<GameObject> levelContainer)
+	private void BuildBlockTypes(Level[,] map, List<GameObject> levelSection)
     {
         for (int y = 0; y < map.GetLength(0); y++)
         {
             for (int x = 0; x < map.GetLength(1); x++)
             {
-				IfBlockTypeCreate(map[y,x],(map.GetLength(0)-y)-1, x, levelContainer);
+				IfBlockTypeCreate(map[y,x],(map.GetLength(0)-y)-1, x, levelSection);
             }
         }
     }
 
-	private void PlaceCoins(Level[,] map, List<GameObject> levelContainer)
+	private void PlaceCoins(Level[,] map, List<GameObject> levelSection)
 	{
 		for (int y = 0; y < map.GetLength(0); y++)
 		{
@@ -222,20 +214,18 @@ public class LevelProcessor : MonoBehaviour
 					var cube = GameObject.CreatePrimitive (PrimitiveType.Cube);
 					cube.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
 					cube.AddComponent<Rotator> ();
-					cube.transform.position = new Vector3 (x, y, 0.5f);
-					// cube.tag = "Collectable";
-					levelContainer.Add (cube);
+					cube.transform.localPosition = new Vector3 (x, y, 0.5f);
+					levelSection.Add (cube);
 				}	
 			}
 		}
 	}
 
-	private void CreateGround(int StartPosition, int GroundWidth, int GroundHeight, List<GameObject> levelContainer)
+	private void CreateGround(int StartPosition, int GroundWidth, int GroundHeight, List<GameObject> levelSection)
     {
         GameObject ground = new GameObject();
 
         ground.AddComponent<Ground>();
-        // Debug.Log(string.Format("Ground: StartPosition = {0}; GroundWidth = {1}; GroundHeight = {2}", StartPosition, GroundWidth, GroundHeight));
         ground.GetComponent<Ground>().Height = GroundHeight;
         ground.GetComponent<Ground>().Width = GroundWidth;
         ground.GetComponent<Ground>().Depth = 1;
@@ -253,10 +243,10 @@ public class LevelProcessor : MonoBehaviour
 			startingPosition = new Vector3(Random.Range(1, GroundWidth / 2), GroundHeight + 1, 0.5f);
 		}
 
-		levelContainer.Add (ground);
+		levelSection.Add (ground);
     }
 
-	private void IfBlockTypeCreate(Level level, int r, int c, List<GameObject> levelContainer)
+	private void IfBlockTypeCreate(Level level, int r, int c, List<GameObject> levelSection)
     {
         List<Level> blockTypes = new List<Level>
         {
@@ -269,11 +259,11 @@ public class LevelProcessor : MonoBehaviour
 
         if (blockTypes.Contains(level))
         {
-			CreateBlockType(level, r, c, levelContainer);
+			CreateBlockType(level, r, c, levelSection);
         }
     }
 
-	private void CreateBlockType(Level level, int r, int c, List<GameObject> levelContainer)
+	private void CreateBlockType(Level level, int r, int c, List<GameObject> levelSection)
     {
         GameObject block = new GameObject();
         block.AddComponent<Block>();
@@ -314,7 +304,7 @@ public class LevelProcessor : MonoBehaviour
         block.transform.parent = this.transform;
         BoxCollider boxCollider = block.AddComponent<BoxCollider>();
 
-		levelContainer.Add (block);
+		levelSection.Add (block);
     }
 
     private void IfItemCreate(Level level, int r, int c)

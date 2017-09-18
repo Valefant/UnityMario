@@ -62,8 +62,6 @@ namespace Assets
 
         void Update()
         {
-            Debug.Log("Character Position: " + characterTransform.position);
-
 			if (characterTransform.position.y <= 0)
 			{
 				Application.LoadLevel (Application.loadedLevel);
@@ -71,11 +69,12 @@ namespace Assets
 
             if (characterTransform.position.x >= (lpObj.columns * lpObj.levelCount - 10))
             {
+				TheEventSystem.getInstance ().publishEvent (new GenerateSectionEvent ());
                 lpObj.ProcessLevel();
 
-                if (lpObj.levelContainers.Count >= 6)
+                if (lpObj.levelSections.Count >= 6)
                 {
-                    foreach (List<GameObject> level in lpObj.levelContainers.GetRange(0, 2))
+                    foreach (List<GameObject> level in lpObj.levelSections.GetRange(0, 2))
                     {
                         foreach (GameObject gameObject in level)
                         {
@@ -83,11 +82,11 @@ namespace Assets
                         }
                     }
 
-                    lpObj.levelContainers.RemoveRange(0, 2);
+                    lpObj.levelSections.RemoveRange(0, 2);
                 }
             }
 
-            Debug.Log(lpObj.levelContainers.Count);
+            Debug.Log(lpObj.levelSections.Count);
         }
     }
 }
