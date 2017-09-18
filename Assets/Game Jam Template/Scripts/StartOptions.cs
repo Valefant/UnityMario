@@ -37,12 +37,13 @@ public class StartOptions : MonoBehaviour {
 
 	public void StartButtonClicked()
 	{
-		//If changeMusicOnStart is true, fade out volume of music group of AudioMixer by calling FadeDown function of PlayMusic, using length of fadeColorAnimationClip as time. 
-		//To change fade time, change length of animation "FadeToColor"
-		if (changeMusicOnStart) 
+        SimpleCharacterControl.canMove = true;
+        //If changeMusicOnStart is true, fade out volume of music group of AudioMixer by calling FadeDown function of PlayMusic, using length of fadeColorAnimationClip as time. 
+        //To change fade time, change length of animation "FadeToColor"
+        if (changeMusicOnStart) 
 		{
 			playMusic.FadeDown(fadeColorAnimationClip.length);
-		}
+        }
 
 		//If changeScenes is true, start fading and change scenes halfway through animation when screen is blocked by FadeImage
 		if (changeScenes) 
