@@ -175,7 +175,6 @@ public class LevelProcessor : MonoBehaviour
                     LastGroundHeight = GroundHeight;
                 }
 
-                //Debug.Log(string.Format("Ende X: Position = {0}; GroundWeidth = {1}; GroundHeight = {2}", StartPosition, GroundWidth, GroundHeight));
                 LastGroundHeight = GroundHeight;
                 GroundHeight = 0;
             }

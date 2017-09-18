@@ -85,8 +85,6 @@ namespace Assets
                     lpObj.levelSections.RemoveRange(0, 2);
                 }
             }
-
-            Debug.Log(lpObj.levelSections.Count);
         }
     }
 }

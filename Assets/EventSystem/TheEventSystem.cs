@@ -38,6 +38,11 @@ public class TheEventSystem
 
 	public void publishEvent(IEventable e)
 	{
+		if (!eventHandlers.ContainsKey(e.GetName()))
+		{
+			return;
+		}
+			
 		foreach (EventHandler eventHandler in eventHandlers[e.GetName()])
 		{
 			eventHandler(e);
