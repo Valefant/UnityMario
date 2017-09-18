@@ -13,7 +13,7 @@ public class PickupEvent : IEventable
 
 	public string GetName()
 	{
-		return GetType().Name;
+		return "PickupEvent";
 	}
 
 	public int getPoints()

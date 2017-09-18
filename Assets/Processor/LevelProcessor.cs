@@ -9,7 +9,7 @@ public class LevelProcessor : MonoBehaviour
     public int playerHeight = 1;
     public int maxJumpHeight = 3;
     public int maxJumpLength = 1;
-    public int minGroundHeight = 4;
+    public int minGroundHeight = 5;
     public int minGroundLength = 4;
     public int maxGroundLength = 10;
 	public int columnPosition = 0;
