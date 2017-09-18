@@ -42,7 +42,7 @@ public class SimpleCharacterControl : MonoBehaviour {
 		{
 			points++;
 			Destroy (collision.gameObject);
-			Debug.Log ("Points: " + points);
+			TheEventSystem.getInstance().publishEvent (new PickupEvent (points));
 		}
 
         ContactPoint[] contactPoints = collision.contacts;
