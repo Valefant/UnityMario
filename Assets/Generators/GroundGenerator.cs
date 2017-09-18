@@ -65,7 +65,7 @@ public class GroundGenerator : IGenerator
                     }
                 }
             }
-
+				
             groundLengthOffset += groundLength;
 
             currentGroundHeight = groundHeight;

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets
 {
@@ -64,7 +64,7 @@ namespace Assets
         {
 			if (characterTransform.position.y <= 0)
 			{
-				Application.LoadLevel (Application.loadedLevel);
+				SceneManager.LoadScene("Hub");
 			}
 
             if (characterTransform.position.x >= (lpObj.columns * lpObj.levelCount - 20))
