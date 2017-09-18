@@ -14,7 +14,7 @@ public class SimpleCharacterControl : MonoBehaviour {
     [SerializeField] public float m_jumpForce = 4;
     [SerializeField] private Animator m_animator;
     [SerializeField] private Rigidbody m_rigidBody;
-    public bool canMove = false;
+    public static bool canMove = false;
 
     [SerializeField] private ControlMode m_controlMode = ControlMode.Direct;
 
@@ -120,6 +120,10 @@ public class SimpleCharacterControl : MonoBehaviour {
 
     private void TankUpdate()
     {
+
+        if (!canMove)
+            return;
+
         float v = Input.GetAxis("Horizontal");//Input.GetAxis("Vertical");
         //float h = Input.GetAxis("Horizontal");
 
@@ -146,6 +150,9 @@ public class SimpleCharacterControl : MonoBehaviour {
 
     private void DirectUpdate()
     {
+        if (!canMove)
+            return;
+
         float v = Input.GetAxis("Horizontal");//Input.GetAxis("Vertical");
         //float h = Input.GetAxis("Horizontal");
 
