@@ -12,7 +12,9 @@ public class SetAudioLevels : MonoBehaviour {
 	public void SetMusicLevel(float musicLvl)
 	{
 		mainMixer.SetFloat("musicVol", musicLvl);
-	}
+        AudioSource audio = gameObject.AddComponent<AudioSource>();
+        audio.volume = musicLvl;
+    }
 
 	//Call this function and pass in the float parameter sfxLevel to set the volume of the AudioMixerGroup SoundFx in mainMixer
 	public void SetSfxLevel(float sfxLevel)
