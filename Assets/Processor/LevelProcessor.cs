@@ -4,7 +4,7 @@ using System.Text;
 
 public class LevelProcessor : MonoBehaviour
 {
-    public int columns = 30;
+    public int columns = 40;
     public int rows = 20;
     public int playerHeight = 1;
     public int maxJumpHeight = 3;
@@ -211,9 +211,14 @@ public class LevelProcessor : MonoBehaviour
 				if (map [y, x] == Level.COIN)
 				{
 					var cube = GameObject.CreatePrimitive (PrimitiveType.Cube);
+					cube.GetComponent<Renderer> ().material.SetColor ("_Color", Color.yellow);
 					cube.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
 					cube.AddComponent<Rotator> ();
-					cube.transform.localPosition = new Vector3 (x, y, 0.5f);
+
+					int adjustedX = x + levelSections.Count * columns;
+					int adjustedY = (map.GetLength(0) - y);
+
+					cube.transform.localPosition = new Vector3 (adjustedX, adjustedY - 0.25f, 0.5f);
 					levelSection.Add (cube);
 				}	
 			}

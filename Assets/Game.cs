@@ -67,7 +67,7 @@ namespace Assets
 				Application.LoadLevel (Application.loadedLevel);
 			}
 
-            if (characterTransform.position.x >= (lpObj.columns * lpObj.levelCount - 10))
+            if (characterTransform.position.x >= (lpObj.columns * lpObj.levelCount - 20))
             {
 				TheEventSystem.getInstance ().publishEvent (new GenerateSectionEvent ());
                 lpObj.ProcessLevel();
