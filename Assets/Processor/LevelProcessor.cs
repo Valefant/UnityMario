@@ -8,19 +8,19 @@ public class LevelProcessor : MonoBehaviour
     public int rows = 20;
     public int playerHeight = 1;
     public int maxJumpHeight = 3;
-    public int maxJumpLength = 1;
+    public int maxJumpLength = 2;
     public int minGroundHeight = 5;
     public int minGroundLength = 4;
     public int maxGroundLength = 10;
-	public int columnPosition = 0;
+    public int columnPosition = 0;
     public float gapProbability = 0.2f;
     public float steepProbability = 0.5f;
     public float blockProbability = 0.35f;
-	public Vector3 startingPosition = Vector3.zero;
-	public int levelCount = 0;
+    public Vector3 startingPosition = Vector3.zero;
+    public int levelCount = 0;
 
-	public List<List<GameObject>> levelSections = new List<List<GameObject>>();
-	private List<IGenerator> generators = new List<IGenerator>();
+    public List<List<GameObject>> levelSections = new List<List<GameObject>>();
+    private List<IGenerator> generators = new List<IGenerator>();
 
     public void Reset()
     {
@@ -32,10 +32,11 @@ public class LevelProcessor : MonoBehaviour
         Debug.Log("ProcessLevel");
         List<IGenerator> generators = new List<IGenerator>();
         AddGenerators(generators);
-        
-		    if (generators.Count <= 0) {
-			    AddGenerators(generators);
-		    }
+
+        if (generators.Count <= 0)
+        {
+            AddGenerators(generators);
+        }
 
         Level[,] map = new Level[rows, columns];
         InitializeMap(map);
@@ -48,7 +49,7 @@ public class LevelProcessor : MonoBehaviour
         DebugMap(map);
         DrawMap(map);
 
-		levelCount++;
+        levelCount++;
     }
 
     void AddGenerators(List<IGenerator> generators)
@@ -76,7 +77,7 @@ public class LevelProcessor : MonoBehaviour
         generators.Add(blockGenerator);
         generators.Add(itemGenerator);
     }
-    
+
     void InitializeMap(Level[,] map)
     {
         for (int r = 0; r < map.GetLength(0); r++)
@@ -114,14 +115,14 @@ public class LevelProcessor : MonoBehaviour
     {
         BuildGround(map);
     }
-		
+
     void BuildGround(Level[,] map)
     {
-		List<GameObject> levelSection = new List<GameObject> ();
+        List<GameObject> levelSection = new List<GameObject>();
 
         int GroundHeight = 0, LastGroundHeight = 0;
         int GroundWidth = 0;
-		int StartPosition = columnPosition;
+        int StartPosition = columnPosition;
         bool Start = true;
 
 
@@ -131,7 +132,7 @@ public class LevelProcessor : MonoBehaviour
             {
                 // Debug.Log(string.Format("Position = {0}; GroundWeidth = {1}; GroundHeight = {2}", StartPosition, GroundWidth, GroundHeight));
                 // Debug.Log(string.Format("X = {0}", x));
-				CreateGround(StartPosition, GroundWidth, LastGroundHeight, levelSection);
+                CreateGround(StartPosition, GroundWidth, LastGroundHeight, levelSection);
                 LastGroundHeight = 0;
                 GroundHeight = 0;
                 GroundWidth = 0;
@@ -162,7 +163,7 @@ public class LevelProcessor : MonoBehaviour
                         // and start with the next one
 
                         // Debug.Log(string.Format("Position = {0}; GroundWeidth = {1}; GroundHeight = {2}", StartPosition, GroundWidth, GroundHeight));
-						CreateGround(StartPosition, GroundWidth, LastGroundHeight, levelSection);
+                        CreateGround(StartPosition, GroundWidth, LastGroundHeight, levelSection);
                         LastGroundHeight = GroundHeight;
                         GroundHeight = 0;
                         GroundWidth = 0;
@@ -179,53 +180,54 @@ public class LevelProcessor : MonoBehaviour
                 GroundHeight = 0;
             }
         }
-		CreateGround(StartPosition, GroundWidth, LastGroundHeight, levelSection);
+        CreateGround(StartPosition, GroundWidth, LastGroundHeight, levelSection);
 
-		BuildBlockTypes(map, levelSection);
-		PlaceCoins (map, levelSection);
-		columnPosition += columns;
+        BuildBlockTypes(map, levelSection);
+        PlaceCoins(map, levelSection);
+        columnPosition += columns;
 
-		Debug.Log ("Startposition: " + StartPosition);
+        Debug.Log("Startposition: " + StartPosition);
 
-		levelSections.Add (levelSection);
+        levelSections.Add(levelSection);
     }
 
 
-	private void BuildBlockTypes(Level[,] map, List<GameObject> levelSection)
+    private void BuildBlockTypes(Level[,] map, List<GameObject> levelSection)
     {
         for (int y = 0; y < map.GetLength(0); y++)
         {
             for (int x = 0; x < map.GetLength(1); x++)
             {
-				IfBlockTypeCreate(map[y,x],(map.GetLength(0)-y)-1, x, levelSection);
+                IfBlockTypeCreate(map[y, x], (map.GetLength(0) - y) - 1, x, levelSection);
             }
         }
     }
 
-	private void PlaceCoins(Level[,] map, List<GameObject> levelSection)
-	{
-		for (int y = 0; y < map.GetLength(0); y++)
-		{
-			for (int x = 0; x < map.GetLength(1); x++)
-			{
-				if (map [y, x] == Level.COIN)
-				{
-					var cube = GameObject.CreatePrimitive (PrimitiveType.Cube);
-					cube.GetComponent<Renderer> ().material.SetColor ("_Color", Color.yellow);
-					cube.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
-					cube.AddComponent<Rotator> ();
+    private void PlaceCoins(Level[,] map, List<GameObject> levelSection)
+    {
+        for (int y = 0; y < map.GetLength(0); y++)
+        {
+            for (int x = 0; x < map.GetLength(1); x++)
+            {
+                if (map[y, x] == Level.COIN)
+                {
+                    var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    cube.GetComponent<Renderer>().material.SetColor("_Color", Color.yellow);
+                    cube.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+                    cube.AddComponent<Rotator>();
+                    cube.GetComponent<BoxCollider>().isTrigger = true;
 
-					int adjustedX = x + levelSections.Count * columns;
-					int adjustedY = (map.GetLength(0) - y);
+                    int adjustedX = x + levelSections.Count * columns;
+                    int adjustedY = (map.GetLength(0) - y);
 
-					cube.transform.localPosition = new Vector3 (adjustedX, adjustedY - 0.25f, 0.5f);
-					levelSection.Add (cube);
-				}	
-			}
-		}
-	}
+                    cube.transform.localPosition = new Vector3(adjustedX, adjustedY - 0.25f, 0.5f);
+                    levelSection.Add(cube);
+                }
+            }
+        }
+    }
 
-	private void CreateGround(int StartPosition, int GroundWidth, int GroundHeight, List<GameObject> levelSection)
+    private void CreateGround(int StartPosition, int GroundWidth, int GroundHeight, List<GameObject> levelSection)
     {
         GameObject ground = new GameObject();
 
@@ -242,15 +244,15 @@ public class LevelProcessor : MonoBehaviour
 
         BoxCollider boxCollider = ground.AddComponent<BoxCollider>();
 
-		if (startingPosition == Vector3.zero)
-		{
-			startingPosition = new Vector3(Random.Range(1, GroundWidth / 2), GroundHeight + 1, 0.5f);
-		}
+        if (startingPosition == Vector3.zero)
+        {
+            startingPosition = new Vector3(Random.Range(1, GroundWidth / 2), GroundHeight + 1, 0.5f);
+        }
 
-		levelSection.Add (ground);
+        levelSection.Add(ground);
     }
 
-	private void IfBlockTypeCreate(Level level, int r, int c, List<GameObject> levelSection)
+    private void IfBlockTypeCreate(Level level, int r, int c, List<GameObject> levelSection)
     {
         List<Level> blockTypes = new List<Level>
         {
@@ -263,11 +265,11 @@ public class LevelProcessor : MonoBehaviour
 
         if (blockTypes.Contains(level))
         {
-			CreateBlockType(level, r, c, levelSection);
+            CreateBlockType(level, r, c, levelSection);
         }
     }
 
-	private void CreateBlockType(Level level, int r, int c, List<GameObject> levelSection)
+    private void CreateBlockType(Level level, int r, int c, List<GameObject> levelSection)
     {
         GameObject block = new GameObject();
         block.AddComponent<Block>();
@@ -304,11 +306,11 @@ public class LevelProcessor : MonoBehaviour
 
         blockComponent.CreateMesh();
 
-		block.transform.position = new Vector3(c + columnPosition, r, 0);
+        block.transform.position = new Vector3(c + columnPosition, r, 0);
         block.transform.parent = this.transform;
         BoxCollider boxCollider = block.AddComponent<BoxCollider>();
 
-		levelSection.Add (block);
+        levelSection.Add(block);
     }
 
     private void IfItemCreate(Level level, int r, int c)

@@ -22,7 +22,8 @@ public class BlockGenerator : IGenerator
         };
 
         // the order of the block types relates to the order of the props array
-        Level[] blockTypes = new Level[] {
+        Level[] blockTypes = new Level[]
+        {
             Level.BRICK_BLOCK,
             Level.QUESTION_MARK_BLOCK,
             Level.EXCLAMATION_RED_BLOCK,
@@ -51,6 +52,7 @@ public class BlockGenerator : IGenerator
             }
         }
     }
+
     int ChooseBlockType(float[] props)
     {
         float random = Random.Range(0f, 1f);

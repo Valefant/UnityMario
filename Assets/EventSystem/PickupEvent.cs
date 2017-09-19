@@ -1,23 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class PickupEvent : IEventable
+﻿public class PickupEvent : IEventable
 {
-	private int points;
+    private readonly int _points;
 
-	public PickupEvent(int points)
-	{
-		this.points = points;
-	}
+    public PickupEvent(int points)
+    {
+        this._points = points;
+    }
 
-	public string GetName()
-	{
-		return "PickupEvent";
-	}
+    public string GetName()
+    {
+        return "PickupEvent";
+    }
 
-	public int getPoints()
-	{
-		return points;
-	}
+    public int GetPoints()
+    {
+        return _points;
+    }
 }
