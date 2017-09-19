@@ -229,6 +229,9 @@ public class LevelProcessor : MonoBehaviour
 
     private void CreateGround(int StartPosition, int GroundWidth, int GroundHeight, List<GameObject> levelSection)
     {
+        if (GroundWidth <= 2)
+            return;
+
         GameObject ground = new GameObject();
 
         ground.AddComponent<Ground>();
