@@ -24,7 +24,8 @@ public class GroundGenerator : IGenerator
 
         if (lastGroundHeight > 0)
         {
-            currentGroundHeight = Random.Range(lastGroundHeight, lastGroundHeight + levelInfo.maxJumpHeight);
+//            currentGroundHeight = Random.Range(lastGroundHeight, lastGroundHeight + levelInfo.maxJumpHeight);
+            currentGroundHeight = lastGroundHeight;
         }
 
         for (int g = 0; g < groundCount; g++)
