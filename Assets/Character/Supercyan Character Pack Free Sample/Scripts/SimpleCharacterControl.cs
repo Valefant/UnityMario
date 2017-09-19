@@ -1,8 +1,8 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-public class SimpleCharacterControl : MonoBehaviour {
-
+public class SimpleCharacterControl : MonoBehaviour
+{
     private enum ControlMode
     {
         Tank,
@@ -35,23 +35,24 @@ public class SimpleCharacterControl : MonoBehaviour {
     private bool m_isGrounded;
     private List<Collider> m_collisions = new List<Collider>();
 
-	public int points = 0;
+    public int points = 0;
 
     private void OnCollisionEnter(Collision collision)
     {
-		if (collision.gameObject.name.ToLower().Contains("cube"))
-		{
-			points++;
-			Destroy (collision.gameObject);
-			TheEventSystem.getInstance().publishEvent (new PickupEvent (points));
-		}
+        if (collision.gameObject.name.ToLower().Contains("cube"))
+        {
+            points++;
+            Destroy(collision.gameObject);
+            EventManager.GetInstance().PublishEvent(new PickupEvent(points));
+        }
 
         ContactPoint[] contactPoints = collision.contacts;
-        for(int i = 0; i < contactPoints.Length; i++)
+        for (int i = 0; i < contactPoints.Length; i++)
         {
             if (Vector3.Dot(contactPoints[i].normal, Vector3.up) > 0.5f)
             {
-                if (!m_collisions.Contains(collision.collider)) {
+                if (!m_collisions.Contains(collision.collider))
+                {
                     m_collisions.Add(collision.collider);
                 }
                 m_isGrounded = true;
@@ -67,40 +68,49 @@ public class SimpleCharacterControl : MonoBehaviour {
         {
             if (Vector3.Dot(contactPoints[i].normal, Vector3.up) > 0.5f)
             {
-                validSurfaceNormal = true; break;
+                validSurfaceNormal = true;
+                break;
             }
         }
 
-        if(validSurfaceNormal)
+        if (validSurfaceNormal)
         {
             m_isGrounded = true;
             if (!m_collisions.Contains(collision.collider))
             {
                 m_collisions.Add(collision.collider);
             }
-        } else
+        }
+        else
         {
             if (m_collisions.Contains(collision.collider))
             {
                 m_collisions.Remove(collision.collider);
             }
-            if (m_collisions.Count == 0) { m_isGrounded = false; }
+            if (m_collisions.Count == 0)
+            {
+                m_isGrounded = false;
+            }
         }
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        if(m_collisions.Contains(collision.collider))
+        if (m_collisions.Contains(collision.collider))
         {
             m_collisions.Remove(collision.collider);
         }
-        if (m_collisions.Count == 0) { m_isGrounded = false; }
+        if (m_collisions.Count == 0)
+        {
+            m_isGrounded = false;
+        }
     }
 
-	void Update () {
+    void Update()
+    {
         m_animator.SetBool("Grounded", m_isGrounded);
 
-        switch(m_controlMode)
+        switch (m_controlMode)
         {
             case ControlMode.Direct:
                 DirectUpdate();
@@ -120,19 +130,26 @@ public class SimpleCharacterControl : MonoBehaviour {
 
     private void TankUpdate()
     {
-
         if (!canMove)
             return;
 
-        float v = Input.GetAxis("Horizontal");//Input.GetAxis("Vertical");
+        float v = Input.GetAxis("Horizontal"); //Input.GetAxis("Vertical");
         //float h = Input.GetAxis("Horizontal");
 
         bool walk = Input.GetKey(KeyCode.LeftShift);
 
-        if (v < 0) {
-            if (walk) { v *= m_backwardsWalkScale; }
-            else { v *= m_backwardRunScale; }
-        } else if(walk)
+        if (v < 0)
+        {
+            if (walk)
+            {
+                v *= m_backwardsWalkScale;
+            }
+            else
+            {
+                v *= m_backwardRunScale;
+            }
+        }
+        else if (walk)
         {
             v *= m_walkScale;
         }
@@ -153,7 +170,7 @@ public class SimpleCharacterControl : MonoBehaviour {
         if (!canMove)
             return;
 
-        float v = Input.GetAxis("Horizontal");//Input.GetAxis("Vertical");
+        float v = Input.GetAxis("Horizontal"); //Input.GetAxis("Vertical");
         //float h = Input.GetAxis("Horizontal");
 
         Transform camera = Camera.main.transform;
@@ -173,7 +190,7 @@ public class SimpleCharacterControl : MonoBehaviour {
         direction.y = 0;
         direction = direction.normalized * directionLength;
 
-        if(direction != Vector3.zero)
+        if (direction != Vector3.zero)
         {
             m_currentDirection = Vector3.Slerp(m_currentDirection, direction, Time.deltaTime * m_interpolation);
 

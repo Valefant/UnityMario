@@ -9,6 +9,5 @@
 
     public void Generate(Level[,] map)
     {
-
     }
 }
