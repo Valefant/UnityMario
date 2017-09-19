@@ -37,12 +37,22 @@ public class SimpleCharacterControl : MonoBehaviour
 
     public int points = 0;
 
+    void Start()
+    {
+        Debug.Log("Creation of character");
+        var audio = gameObject.AddComponent<AudioSource>();
+        var coinClip = Resources.Load("coin") as AudioClip;
+        audio.clip = coinClip;
+
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (!other.gameObject.name.ToLower().Contains("cube")) return;
         
         points++;
         Destroy(other.gameObject);
+        gameObject.GetComponent<AudioSource>().Play();
         EventManager.GetInstance().PublishEvent(new PickupEvent(points));
     }
     
