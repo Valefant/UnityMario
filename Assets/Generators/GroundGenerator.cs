@@ -36,7 +36,7 @@ public class GroundGenerator : IGenerator
 
             int minGroundHeight = steepProbability >= levelInfo.steepProbability ? currentGroundHeight : levelInfo.minGroundHeight; 
 
-            int groundHeight = Random.Range(minGroundHeight, currentGroundHeight + levelInfo.maxJumpHeight);
+            int groundHeight = Random.Range(minGroundHeight, currentGroundHeight + levelInfo.maxJumpHeight - 1);
 
             if (groundHeight > maxGroundHeight)
             {
