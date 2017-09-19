@@ -10,6 +10,8 @@ namespace Assets
         public Transform characterPrefab;
         public LevelProcessor lpObj;
         public Transform characterTransform;
+        private int skyboxIndex = 0;
+        private float lastXPosi = 0;
        
         public void Start()
         {
@@ -90,29 +92,36 @@ namespace Assets
                 }
             }
 
-            if(characterTransform.position.x >= 100 && characterTransform.position.x <= 105)
+            if (characterTransform.position.x >= 200 + lastXPosi && characterTransform.position.x <= 205 + lastXPosi)
             {
                 Material m = Resources.Load("CloudyCrownEvening", typeof(Material)) as Material;
                 Debug.Log("Matieral-Name: " + m.name);
                 RenderSettings.skybox = m;
             }
-            if (characterTransform.position.x >= 200 && characterTransform.position.x <= 205)
+            if (characterTransform.position.x >= 400 + lastXPosi && characterTransform.position.x <= 405 + lastXPosi)
             {
                 Material m = Resources.Load("CloudyCrownMidnight", typeof(Material)) as Material;
                 Debug.Log("Matieral-Name: " + m.name);
                 RenderSettings.skybox = m;
             }
-            if (characterTransform.position.x >= 300 && characterTransform.position.x <= 305)
+            if (characterTransform.position.x >= 600 + lastXPosi && characterTransform.position.x <= 605 + lastXPosi)
             {
                 Material m = Resources.Load("CloudyCrownSunset", typeof(Material)) as Material;
                 Debug.Log("Matieral-Name: " + m.name);
                 RenderSettings.skybox = m;
             }
-            if (characterTransform.position.x >= 400 && characterTransform.position.x <= 405)
+            if (characterTransform.position.x >= 800 + lastXPosi && characterTransform.position.x <= 805 + lastXPosi)
             {
                 Material m = Resources.Load("CloudyCrownDaybreak", typeof(Material)) as Material;
                 Debug.Log("Matieral-Name: " + m.name);
                 RenderSettings.skybox = m;
+            }
+            if (characterTransform.position.x >= 1000 + lastXPosi && characterTransform.position.x <= 1005 + lastXPosi)
+            {
+                Material m = Resources.Load("CloudyCrownMidday", typeof(Material)) as Material;
+                Debug.Log("Matieral-Name: " + m.name);
+                RenderSettings.skybox = m;
+                lastXPosi = characterTransform.position.x;
             }
         }
     }
