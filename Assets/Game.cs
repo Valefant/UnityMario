@@ -89,6 +89,31 @@ namespace Assets
                     lpObj.levelSections.RemoveRange(0, 2);
                 }
             }
+
+            if(characterTransform.position.x >= 100 && characterTransform.position.x <= 105)
+            {
+                Material m = Resources.Load("CloudyCrownEvening", typeof(Material)) as Material;
+                Debug.Log("Matieral-Name: " + m.name);
+                RenderSettings.skybox = m;
+            }
+            if (characterTransform.position.x >= 200 && characterTransform.position.x <= 205)
+            {
+                Material m = Resources.Load("CloudyCrownMidnight", typeof(Material)) as Material;
+                Debug.Log("Matieral-Name: " + m.name);
+                RenderSettings.skybox = m;
+            }
+            if (characterTransform.position.x >= 300 && characterTransform.position.x <= 305)
+            {
+                Material m = Resources.Load("CloudyCrownSunset", typeof(Material)) as Material;
+                Debug.Log("Matieral-Name: " + m.name);
+                RenderSettings.skybox = m;
+            }
+            if (characterTransform.position.x >= 400 && characterTransform.position.x <= 405)
+            {
+                Material m = Resources.Load("CloudyCrownDaybreak", typeof(Material)) as Material;
+                Debug.Log("Matieral-Name: " + m.name);
+                RenderSettings.skybox = m;
+            }
         }
     }
 }
