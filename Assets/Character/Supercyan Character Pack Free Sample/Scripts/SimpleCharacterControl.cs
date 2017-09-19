@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Assets.EventSystem;
 using UnityEngine;
 
 public class SimpleCharacterControl : MonoBehaviour
@@ -39,11 +40,9 @@ public class SimpleCharacterControl : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Creation of character");
         var audio = gameObject.AddComponent<AudioSource>();
         var coinClip = Resources.Load("coin") as AudioClip;
         audio.clip = coinClip;
-
     }
 
     void OnTriggerEnter(Collider other)
@@ -120,6 +119,8 @@ public class SimpleCharacterControl : MonoBehaviour
 
     void Update()
     {
+        Vector3 oldPosition = gameObject.transform.localPosition;
+        
         m_animator.SetBool("Grounded", m_isGrounded);
 
         switch (m_controlMode)
@@ -138,6 +139,9 @@ public class SimpleCharacterControl : MonoBehaviour
         }
 
         m_wasGrounded = m_isGrounded;
+
+        Vector3 newPosition = gameObject.transform.localPosition;
+        EventManager.GetInstance().PublishEvent(new CharacterPositionUpdatedEvent(oldPosition, newPosition));
     }
 
     private void TankUpdate()

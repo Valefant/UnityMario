@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Assets
 {
@@ -9,7 +10,7 @@ namespace Assets
         public Transform characterPrefab;
         public LevelProcessor lpObj;
         public Transform characterTransform;
-
+       
         public void Start()
         {
             Debug.Log("---------- Start ----------");
@@ -62,7 +63,7 @@ namespace Assets
         }
 
         void Update()
-        {
+        {           
             if (characterTransform.position.y <= 0)
             {
                 SceneManager.LoadScene("Hub");
