@@ -37,15 +37,17 @@ public class SimpleCharacterControl : MonoBehaviour
 
     public int points = 0;
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (!other.gameObject.name.ToLower().Contains("cube")) return;
+        
+        points++;
+        Destroy(other.gameObject);
+        EventManager.GetInstance().PublishEvent(new PickupEvent(points));
+    }
+    
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name.ToLower().Contains("cube"))
-        {
-            points++;
-            Destroy(collision.gameObject);
-            EventManager.GetInstance().PublishEvent(new PickupEvent(points));
-        }
-
         ContactPoint[] contactPoints = collision.contacts;
         for (int i = 0; i < contactPoints.Length; i++)
         {

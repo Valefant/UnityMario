@@ -215,7 +215,7 @@ public class LevelProcessor : MonoBehaviour
                     cube.GetComponent<Renderer>().material.SetColor("_Color", Color.yellow);
                     cube.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
                     cube.AddComponent<Rotator>();
-                    cube.AddComponent<Rigidbody>();
+                    cube.GetComponent<BoxCollider>().isTrigger = true;
 
                     int adjustedX = x + levelSections.Count * columns;
                     int adjustedY = (map.GetLength(0) - y);
