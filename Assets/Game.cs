@@ -67,6 +67,7 @@ namespace Assets
             {
                 SceneManager.LoadScene("Hub");
                 EventManager.GetInstance().PublishEvent(new PickupEvent(0));
+                SimpleCharacterControl.canMove = false;
             }
 
             if (characterTransform.position.x >= (lpObj.columns * lpObj.levelCount - 20))
