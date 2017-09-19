@@ -12,7 +12,9 @@ public class SetAudioLevels : MonoBehaviour {
 	public void SetMusicLevel(float musicLvl)
 	{
 		mainMixer.SetFloat("musicVol", musicLvl);
-        AudioSource audio = gameObject.AddComponent<AudioSource>();
+        GameObject mCamera = GameObject.Find("Main Camera");
+        AudioSource audio = mCamera.GetComponent<AudioSource>();
+        Debug.Log("SetMusicLevel = " + musicLvl);
         audio.volume = musicLvl;
     }
 
