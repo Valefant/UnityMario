@@ -27,14 +27,14 @@ public class LevelProcessor : MonoBehaviour
     public List<List<GameObject>> levelSections = new List<List<GameObject>>();
     private List<IGenerator> _generators = new List<IGenerator>();
 
-    public void Reset()
-    {
-        ProcessLevel();
-    }
+    private Transform _enemyPrefab;
 
-    public void ProcessLevel()
+    public void ProcessLevel(Transform enemyPrefab)
     {
         Debug.Log("ProcessLevel");
+
+        _enemyPrefab = enemyPrefab;
+        
         List<IGenerator> generators = new List<IGenerator>();
         AddGenerators(generators);
 
@@ -191,14 +191,13 @@ public class LevelProcessor : MonoBehaviour
         CreateGround(StartPosition, GroundWidth, LastGroundHeight, levelSection);
 
         BuildBlockTypes(map, levelSection);
-        PlaceCoins(map, levelSection);
+        PlaceThings(map, levelSection);
         columnPosition += columns;
 
         Debug.Log("Startposition: " + StartPosition);
 
         levelSections.Add(levelSection);
     }
-
 
     private void BuildBlockTypes(Level[,] map, List<GameObject> levelSection)
     {
@@ -211,7 +210,7 @@ public class LevelProcessor : MonoBehaviour
         }
     }
 
-    private void PlaceCoins(Level[,] map, List<GameObject> levelSection)
+    private void PlaceThings(Level[,] map, List<GameObject> levelSection)
     {
         for (int y = 0; y < map.GetLength(0); y++)
         {
@@ -230,11 +229,23 @@ public class LevelProcessor : MonoBehaviour
 
                     cube.transform.localPosition = new Vector3(adjustedX, adjustedY - 0.25f, 0.5f);
                     levelSection.Add(cube);
+                } 
+                else if (map[y, x] == Level.ENEMY)
+                {
+                    Debug.Log("Enemy here");
+                    int adjustedX = x + levelSections.Count * columns;
+                    int adjustedY = (map.GetLength(0) - y);
+                    
+                    var enemy = Instantiate(_enemyPrefab, new Vector3(adjustedX, adjustedY - 1, 0.5f), Quaternion.identity);
+                    enemy.localScale = new Vector3(30f, 30f, 30f);
+                    enemy.rotation = Quaternion.AngleAxis(-90, new Vector3(0, 1, 0));
+                    
+                    levelSection.Add(enemy.gameObject);
                 }
             }
         }
     }
-
+    
     private void CreateGround(int StartPosition, int GroundWidth, int GroundHeight, List<GameObject> levelSection)
     {
         if (GroundWidth <= 2)

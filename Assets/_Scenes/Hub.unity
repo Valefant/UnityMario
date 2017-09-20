@@ -2852,6 +2852,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterPrefab: {fileID: 4549428611729446, guid: 0e74cf81e6fd82546b4797f71ceffb81,
     type: 2}
+  enemyPrefab: {fileID: 4000013669607808, guid: 2a4adfdefdadd7048a18bb7e7cc5b23b,
+    type: 2}
   lpObj: {fileID: 0}
   characterTransform: {fileID: 0}
 --- !u!45 &1385759718

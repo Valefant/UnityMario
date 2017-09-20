@@ -6,7 +6,8 @@
     WATER,
     STAR,
     COIN,
-
+    ENEMY,
+    
     // Block types
     BRICK_BLOCK,
     QUESTION_MARK_BLOCK,

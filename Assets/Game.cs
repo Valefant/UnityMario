@@ -8,15 +8,14 @@ namespace Assets
     class Game : MonoBehaviour
     {
         public Transform characterPrefab;
+        public Transform enemyPrefab;
         public LevelProcessor lpObj;
         public Transform characterTransform;
         private int skyboxIndex = 0;
         private float lastXPosi = 0;
        
         public void Start()
-        {
-            gameObject.AddComponent<DisplaySeed>();
-            
+        {           
             Debug.Log("---------- Start ----------");
             Debug.Log("----                   ----");
 
@@ -24,7 +23,7 @@ namespace Assets
 
             GameObject levelProcessor = new GameObject();
             lpObj = levelProcessor.AddComponent<LevelProcessor>();
-            lpObj.ProcessLevel();
+            lpObj.ProcessLevel(enemyPrefab);
 
             #endregion
 
@@ -78,7 +77,7 @@ namespace Assets
             if (characterTransform.position.x >= (lpObj.columns * lpObj.levelCount - 20))
             {
                 EventManager.GetInstance().PublishEvent(new GenerateSectionEvent());
-                lpObj.ProcessLevel();
+                lpObj.ProcessLevel(enemyPrefab);
 
                 if (lpObj.levelSections.Count >= 6)
                 {
