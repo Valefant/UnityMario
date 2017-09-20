@@ -12,7 +12,16 @@ namespace Assets
         public Transform characterTransform;
         private int skyboxIndex = 0;
         private float lastXPosi = 0;
-       
+        AudioSource audio;
+        AudioClip acSundown;
+        AudioClip acDoD;
+        AudioClip acOutcast;
+        AudioClip acMorning;
+
+
+
+
+
         public void Start()
         {
             gameObject.AddComponent<DisplaySeed>();
@@ -55,13 +64,18 @@ namespace Assets
             Debug.Log("Matieral-Name: " + m.name);
             RenderSettings.skybox = m;
 
-            AudioSource audio = gameObject.AddComponent<AudioSource>();
-            AudioClip vv = Resources.Load("Songs/Super Mario Bros. medley") as AudioClip;
+            audio = gameObject.AddComponent<AudioSource>();
+            AudioClip vv = Resources.Load("Songs/Morning") as AudioClip;
+            acSundown = Resources.Load("Songs/Sundown") as AudioClip;
+            acDoD = Resources.Load("Songs/Dance Of Death") as AudioClip;
+            acOutcast = Resources.Load("Songs/Outcast") as AudioClip;
+            acMorning = Resources.Load("Songs/Morning") as AudioClip;
 
             audio.clip = vv;
             audio.loop = true;
             audio.volume = 0.1f;
             audio.Play();
+
 
             #endregion
         }
@@ -96,30 +110,39 @@ namespace Assets
 
             if (characterTransform.position.x >= 200 + lastXPosi && characterTransform.position.x <= 205 + lastXPosi)
             {
-                Material m = Resources.Load("CloudyCrownEvening", typeof(Material)) as Material;
+                audio.clip = acSundown;
+                audio.Play();
+                Material m = Resources.Load("CloudyCrownSunset", typeof(Material)) as Material;
                 Debug.Log("Matieral-Name: " + m.name);
                 RenderSettings.skybox = m;
             }
             if (characterTransform.position.x >= 400 + lastXPosi && characterTransform.position.x <= 405 + lastXPosi)
             {
-                Material m = Resources.Load("CloudyCrownMidnight", typeof(Material)) as Material;
+                Material m = Resources.Load("CloudyCrownEvening", typeof(Material)) as Material;
                 Debug.Log("Matieral-Name: " + m.name);
                 RenderSettings.skybox = m;
             }
             if (characterTransform.position.x >= 600 + lastXPosi && characterTransform.position.x <= 605 + lastXPosi)
             {
-                Material m = Resources.Load("CloudyCrownSunset", typeof(Material)) as Material;
+                audio.clip = acDoD;
+                audio.Play();
+                Material m = Resources.Load("CloudyCrownMidnight", typeof(Material)) as Material;
                 Debug.Log("Matieral-Name: " + m.name);
                 RenderSettings.skybox = m;
             }
+
             if (characterTransform.position.x >= 800 + lastXPosi && characterTransform.position.x <= 805 + lastXPosi)
             {
+                audio.clip = acOutcast;
+                audio.Play();
                 Material m = Resources.Load("CloudyCrownDaybreak", typeof(Material)) as Material;
                 Debug.Log("Matieral-Name: " + m.name);
                 RenderSettings.skybox = m;
             }
             if (characterTransform.position.x >= 1000 + lastXPosi && characterTransform.position.x <= 1005 + lastXPosi)
             {
+                audio.clip = acMorning;
+                audio.Play();
                 Material m = Resources.Load("CloudyCrownMidday", typeof(Material)) as Material;
                 Debug.Log("Matieral-Name: " + m.name);
                 RenderSettings.skybox = m;
