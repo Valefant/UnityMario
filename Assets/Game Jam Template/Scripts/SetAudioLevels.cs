@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class SetAudioLevels : MonoBehaviour {
 
 	public AudioMixer mainMixer; //Used to hold a reference to the AudioMixer mainMixer
+    public static float sfxVolume = 0.1f;
 
 
 	//Call this function and pass in the float parameter musicLvl to set the volume of the AudioMixerGroup Music in mainMixer
@@ -22,5 +23,7 @@ public class SetAudioLevels : MonoBehaviour {
 	public void SetSfxLevel(float sfxLevel)
 	{
 		mainMixer.SetFloat("sfxVol", sfxLevel);
-	}
+        sfxVolume = sfxLevel;
+
+    }
 }
