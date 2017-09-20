@@ -51,6 +51,7 @@ public class SimpleCharacterControl : MonoBehaviour
         
         points++;
         Destroy(other.gameObject);
+        gameObject.GetComponent<AudioSource>().volume = SetAudioLevels.sfxVolume;
         gameObject.GetComponent<AudioSource>().Play();
         EventManager.GetInstance().PublishEvent(new PickupEvent(points));
     }
