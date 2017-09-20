@@ -15,6 +15,8 @@ namespace Assets
        
         public void Start()
         {
+            gameObject.AddComponent<DisplaySeed>();
+            
             Debug.Log("---------- Start ----------");
             Debug.Log("----                   ----");
 

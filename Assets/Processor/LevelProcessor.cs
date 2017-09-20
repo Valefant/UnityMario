@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
+using Assets.EventSystem;
+using UnityEngine.EventSystems;
+using Random = UnityEngine.Random;
 
 public class LevelProcessor : MonoBehaviour
 {
@@ -19,8 +23,9 @@ public class LevelProcessor : MonoBehaviour
     public Vector3 startingPosition = Vector3.zero;
     public int levelCount = 0;
 
+    public static String Seed;
     public List<List<GameObject>> levelSections = new List<List<GameObject>>();
-    private List<IGenerator> generators = new List<IGenerator>();
+    private List<IGenerator> _generators = new List<IGenerator>();
 
     public void Reset()
     {
@@ -67,11 +72,14 @@ public class LevelProcessor : MonoBehaviour
         levelInfo.steepProbability = steepProbability;
         levelInfo.blockProbability = blockProbability;
 
+        Seed = Guid.NewGuid().ToString().Substring(0, 8).ToUpper();
+        Random.InitState(Seed.GetHashCode());
+        
         GroundGenerator groundGenerator = new GroundGenerator(levelInfo);
         ObstacleGenerator obstacleGenerator = new ObstacleGenerator(levelInfo);
         BlockGenerator blockGenerator = new BlockGenerator(levelInfo);
         ItemGenerator itemGenerator = new ItemGenerator(levelInfo);
-
+        
         generators.Add(groundGenerator);
         generators.Add(obstacleGenerator);
         generators.Add(blockGenerator);
