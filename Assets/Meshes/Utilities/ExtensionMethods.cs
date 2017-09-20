@@ -22,7 +22,7 @@ namespace ExtensionMethods
             return new Vector3(x * width, y * height, z * depth);
         }
 
-        public static List<Vector2> FindEmptyLocationsAboveGround(Level[,] map)
+        public static List<Vector2> FindEmptyLocationsAboveGround(Level[,] map, float excludeLocationProbability)
         {
             List<Vector2> emptyLocationsAboveGround = new List<Vector2>();
 
@@ -32,7 +32,12 @@ namespace ExtensionMethods
                 {
                     if (r > 0 && map[r, c] == Level.GROUND && map[r - 1, c] == Level.EMPTY)
                     {
-                        emptyLocationsAboveGround.Add(new Vector2(c, r - 1));
+                        var random = Random.Range(0f, 1f);
+
+                        if (excludeLocationProbability >= random)
+                        {
+                           emptyLocationsAboveGround.Add(new Vector2(c, r - 1));
+                        }
                     }
                 }
             }

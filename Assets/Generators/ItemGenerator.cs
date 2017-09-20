@@ -13,9 +13,11 @@ public class ItemGenerator : IGenerator
 
     public void Generate(Level[,] map)
     {
-        List<Vector2> emptyLocationsAboveGround = ExtensionMethods.MyExtensions.FindEmptyLocationsAboveGround(map);
-        Vector2 randomLocation = emptyLocationsAboveGround[Random.Range(0, emptyLocationsAboveGround.Count - 1)];
+        List<Vector2> emptyLocationsAboveGround = ExtensionMethods.MyExtensions.FindEmptyLocationsAboveGround(map, 0.1f);
 
-		map[(int) randomLocation.y, (int) randomLocation.x] = Level.COIN;
+        foreach (Vector2 emptyLocationAboveGround in emptyLocationsAboveGround)
+        {
+            map[(int) emptyLocationAboveGround.y, (int) emptyLocationAboveGround.x] = Level.COIN;   
+        }
     }
 }
