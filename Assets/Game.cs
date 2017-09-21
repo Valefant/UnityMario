@@ -23,6 +23,10 @@ namespace Assets
 
         public void Start()
         {
+            lt = GameObject.Find("Directional Light");
+            Ground.texture1 = Resources.Load("dirt stones") as Texture;
+            Ground.texture2 = Resources.Load("leafs dark") as Texture;
+
             #region LevelProcessor
 
             GameObject levelProcessor = new GameObject();
@@ -70,9 +74,7 @@ namespace Assets
             audio.volume = 0.1f;
             audio.Play();
             #endregion
-
-            lt = GameObject.Find("Directional Light");
-        }
+    }
 
         void Update()
         {
@@ -110,6 +112,8 @@ namespace Assets
                 Debug.Log("Matieral-Name: " + m.name);
                 RenderSettings.skybox = m;
                 lt.GetComponent<Light>().intensity = 0.5f;
+                Ground.texture1 = Resources.Load("dirt stones eary yellow") as Texture;
+                Ground.texture2 = Resources.Load("dirt stones leafs more") as Texture;
             }
             if (characterTransform.position.x >= 400 + lastXPosi && characterTransform.position.x <= 405 + lastXPosi)
             {
@@ -117,6 +121,8 @@ namespace Assets
                 Debug.Log("Matieral-Name: " + m.name);
                 RenderSettings.skybox = m;
                 lt.GetComponent<Light>().intensity = 0.3f;
+                Ground.texture1 = Resources.Load("grey dirt stones") as Texture;
+                Ground.texture2 = Resources.Load("granit grass") as Texture;
             }
             if (characterTransform.position.x >= 600 + lastXPosi && characterTransform.position.x <= 605 + lastXPosi)
             {
@@ -126,6 +132,8 @@ namespace Assets
                 Debug.Log("Matieral-Name: " + m.name);
                 RenderSettings.skybox = m;
                 lt.GetComponent<Light>().intensity = 0.0f;
+                Ground.texture1 = Resources.Load("dirt stones") as Texture;
+                Ground.texture2 = Resources.Load("sand stones") as Texture;
             }
 
             if (characterTransform.position.x >= 800 + lastXPosi && characterTransform.position.x <= 805 + lastXPosi)
@@ -146,7 +154,9 @@ namespace Assets
                 RenderSettings.skybox = m;
                 lastXPosi = characterTransform.position.x;
                 lt.GetComponent<Light>().intensity = 1f;
-            }
+
+
+    }
         }
     }
 }

@@ -19,6 +19,9 @@ public class Ground : MonoBehaviour {
     public Vector3 P0, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11;
     public Texture2D mainTexture;
     public Texture2D topTexture;
+    public static Texture texture1;
+    public static Texture texture2;
+
 
     #region Mesh
     public Mesh mesh;
@@ -391,8 +394,8 @@ public class Ground : MonoBehaviour {
     {
         // TODO: Texturen laden
         Texture[] textures = new Texture[mesh.subMeshCount];
-        textures[1] = Resources.Load("dirt stones") as Texture;
-        textures[0] = Resources.Load("leafs dark") as Texture;
+        textures[1] = texture1;
+        textures[0] = texture2;
 
         // TODO: Material-Array anlegen
         Material[] materials = new Material[mesh.subMeshCount];
