@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Assets.EventSystem;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SimpleCharacterControl : MonoBehaviour
 {
@@ -45,6 +46,7 @@ public class SimpleCharacterControl : MonoBehaviour
     {
         _coinAudioSource = CreateAudioSourceWithClip("coin");
         _jumpAuidoSource = CreateAudioSourceWithClip("jump");
+        m_rigidBody.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
     }
 
     private AudioSource CreateAudioSourceWithClip(string clipname)
@@ -68,6 +70,13 @@ public class SimpleCharacterControl : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.name.ToLower().Contains("rabbit"))
+        {
+            SceneManager.LoadScene("Hub");
+            EventManager.GetInstance().PublishEvent(new PickupEvent(0));
+            canMove = false;
+        }
+        
         ContactPoint[] contactPoints = collision.contacts;
         for (int i = 0; i < contactPoints.Length; i++)
         {

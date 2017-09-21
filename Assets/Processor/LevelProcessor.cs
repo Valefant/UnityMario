@@ -238,6 +238,7 @@ public class LevelProcessor : MonoBehaviour
                     var enemyTransform = enemy.GetComponent<Transform>();
 
                     enemy.AddComponent<EnemyAI>();
+                    enemy.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
                     enemyTransform.localScale = new Vector3(30f, 30f, 30f);
                     
                     var boxCollider = enemy.AddComponent<BoxCollider>();
