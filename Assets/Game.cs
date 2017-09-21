@@ -19,13 +19,26 @@ namespace Assets
         AudioClip acOutcast;
         AudioClip acMorning;
         GameObject lt;
+        List<int> materialIndexes = new List<int>();
+        Texture[] textures1 = new Texture[4];
+        Texture[] textures2 = new Texture[4];
 
 
         public void Start()
         {
             lt = GameObject.Find("Directional Light");
-            Ground.texture1 = Resources.Load("dirt stones") as Texture;
-            Ground.texture2 = Resources.Load("leafs dark") as Texture;
+            textures1[0] = Resources.Load("dirt stones") as Texture;
+            textures2[0] = Resources.Load("leafs dark") as Texture;
+            textures1[1] = Resources.Load("dirt stones eary yellow") as Texture;
+            textures2[1] = Resources.Load("dirt stones leafs more") as Texture;
+            textures1[2] = Resources.Load("grey dirt stones") as Texture;
+            textures2[2] = Resources.Load("granit grass") as Texture;
+            textures1[3] = Resources.Load("dirt stones") as Texture;
+            textures2[3] = Resources.Load("sand stones") as Texture;
+
+            int rnd = (int)(Random.Range(0f, 0.3f) * 10);
+            Ground.texture1 = textures1[rnd];
+            Ground.texture2 = textures2[rnd];
 
             #region LevelProcessor
 
@@ -74,7 +87,7 @@ namespace Assets
             audio.volume = 0.1f;
             audio.Play();
             #endregion
-    }
+        }
 
         void Update()
         {
@@ -112,8 +125,9 @@ namespace Assets
                 Debug.Log("Matieral-Name: " + m.name);
                 RenderSettings.skybox = m;
                 lt.GetComponent<Light>().intensity = 0.5f;
-                Ground.texture1 = Resources.Load("dirt stones eary yellow") as Texture;
-                Ground.texture2 = Resources.Load("dirt stones leafs more") as Texture;
+                int rnd = (int)(Random.Range(0f, 0.3f) * 10);
+                Ground.texture1 = textures1[rnd];
+                Ground.texture2 = textures2[rnd];
             }
             if (characterTransform.position.x >= 400 + lastXPosi && characterTransform.position.x <= 405 + lastXPosi)
             {
@@ -121,8 +135,9 @@ namespace Assets
                 Debug.Log("Matieral-Name: " + m.name);
                 RenderSettings.skybox = m;
                 lt.GetComponent<Light>().intensity = 0.3f;
-                Ground.texture1 = Resources.Load("grey dirt stones") as Texture;
-                Ground.texture2 = Resources.Load("granit grass") as Texture;
+                int rnd = (int)(Random.Range(0f, 0.3f) * 10);
+                Ground.texture1 = textures1[rnd];
+                Ground.texture2 = textures2[rnd];
             }
             if (characterTransform.position.x >= 600 + lastXPosi && characterTransform.position.x <= 605 + lastXPosi)
             {
@@ -132,8 +147,9 @@ namespace Assets
                 Debug.Log("Matieral-Name: " + m.name);
                 RenderSettings.skybox = m;
                 lt.GetComponent<Light>().intensity = 0.0f;
-                Ground.texture1 = Resources.Load("dirt stones") as Texture;
-                Ground.texture2 = Resources.Load("sand stones") as Texture;
+                int rnd = (int)(Random.Range(0f, 0.3f) * 10);
+                Ground.texture1 = textures1[rnd];
+                Ground.texture2 = textures2[rnd];
             }
 
             if (characterTransform.position.x >= 800 + lastXPosi && characterTransform.position.x <= 805 + lastXPosi)
@@ -144,6 +160,9 @@ namespace Assets
                 Debug.Log("Matieral-Name: " + m.name);
                 RenderSettings.skybox = m;
                 lt.GetComponent<Light>().intensity = 0.6f;
+                int rnd = (int)(Random.Range(0f, 0.3f) * 10);
+                Ground.texture1 = textures1[rnd];
+                Ground.texture2 = textures2[rnd];
             }
             if (characterTransform.position.x >= 1000 + lastXPosi && characterTransform.position.x <= 1005 + lastXPosi)
             {
@@ -154,9 +173,17 @@ namespace Assets
                 RenderSettings.skybox = m;
                 lastXPosi = characterTransform.position.x;
                 lt.GetComponent<Light>().intensity = 1f;
+                fillMaterialIndex();
+                int rnd = (int)(Random.Range(0f, 0.3f) * 10);
+                Ground.texture1 = textures1[rnd];
+                Ground.texture2 = textures2[rnd];
+            }
+        }
 
-
-    }
+        private void fillMaterialIndex()
+        {
+            for (int i = 0; i < materialIndexes.Count - 1; i++)
+                materialIndexes[i] = i;
         }
     }
 }
