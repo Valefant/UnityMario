@@ -18,6 +18,7 @@ namespace Assets
         AudioClip acDoD;
         AudioClip acOutcast;
         AudioClip acMorning;
+        GameObject lt;
 
 
         public void Start()
@@ -68,8 +69,9 @@ namespace Assets
             audio.loop = true;
             audio.volume = 0.1f;
             audio.Play();
-
             #endregion
+
+            lt = GameObject.Find("Directional Light");
         }
 
         void Update()
@@ -107,12 +109,14 @@ namespace Assets
                 Material m = Resources.Load("CloudyCrownSunset", typeof(Material)) as Material;
                 Debug.Log("Matieral-Name: " + m.name);
                 RenderSettings.skybox = m;
+                lt.GetComponent<Light>().intensity = 0.5f;
             }
             if (characterTransform.position.x >= 400 + lastXPosi && characterTransform.position.x <= 405 + lastXPosi)
             {
                 Material m = Resources.Load("CloudyCrownEvening", typeof(Material)) as Material;
                 Debug.Log("Matieral-Name: " + m.name);
                 RenderSettings.skybox = m;
+                lt.GetComponent<Light>().intensity = 0.3f;
             }
             if (characterTransform.position.x >= 600 + lastXPosi && characterTransform.position.x <= 605 + lastXPosi)
             {
@@ -121,6 +125,7 @@ namespace Assets
                 Material m = Resources.Load("CloudyCrownMidnight", typeof(Material)) as Material;
                 Debug.Log("Matieral-Name: " + m.name);
                 RenderSettings.skybox = m;
+                lt.GetComponent<Light>().intensity = 0.0f;
             }
 
             if (characterTransform.position.x >= 800 + lastXPosi && characterTransform.position.x <= 805 + lastXPosi)
@@ -130,6 +135,7 @@ namespace Assets
                 Material m = Resources.Load("CloudyCrownDaybreak", typeof(Material)) as Material;
                 Debug.Log("Matieral-Name: " + m.name);
                 RenderSettings.skybox = m;
+                lt.GetComponent<Light>().intensity = 0.6f;
             }
             if (characterTransform.position.x >= 1000 + lastXPosi && characterTransform.position.x <= 1005 + lastXPosi)
             {
@@ -139,6 +145,7 @@ namespace Assets
                 Debug.Log("Matieral-Name: " + m.name);
                 RenderSettings.skybox = m;
                 lastXPosi = characterTransform.position.x;
+                lt.GetComponent<Light>().intensity = 1f;
             }
         }
     }
