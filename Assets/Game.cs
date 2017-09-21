@@ -8,7 +8,7 @@ namespace Assets
     class Game : MonoBehaviour
     {
         public Transform characterPrefab;
-        public Transform enemyPrefab;
+        public GameObject enemyPrefab;
         public LevelProcessor lpObj;
         public Transform characterTransform;
         private int skyboxIndex = 0;
@@ -20,14 +20,8 @@ namespace Assets
         AudioClip acMorning;
 
 
-
-
-
         public void Start()
-        {           
-            Debug.Log("---------- Start ----------");
-            Debug.Log("----                   ----");
-
+        {
             #region LevelProcessor
 
             GameObject levelProcessor = new GameObject();
@@ -75,12 +69,11 @@ namespace Assets
             audio.volume = 0.1f;
             audio.Play();
 
-
             #endregion
         }
 
         void Update()
-        {           
+        {
             if (characterTransform.position.y <= 0)
             {
                 SceneManager.LoadScene("Hub");
@@ -88,7 +81,7 @@ namespace Assets
                 SimpleCharacterControl.canMove = false;
             }
 
-            if (characterTransform.position.x >= (lpObj.columns * lpObj.levelCount - 20))
+            if (characterTransform.position.x >= (lpObj.columns * lpObj.entireLevelSectionCount - 20))
             {
                 EventManager.GetInstance().PublishEvent(new GenerateSectionEvent());
                 lpObj.ProcessLevel(enemyPrefab);

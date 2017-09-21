@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Text;
-using Assets.EventSystem;
-using UnityEngine.EventSystems;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class LevelProcessor : MonoBehaviour
@@ -21,15 +19,15 @@ public class LevelProcessor : MonoBehaviour
     public float steepProbability = 0.5f;
     public float blockProbability = 0.35f;
     public Vector3 startingPosition = Vector3.zero;
-    public int levelCount = 0;
+    public int entireLevelSectionCount = 0;
 
     public static String Seed;
     public List<List<GameObject>> levelSections = new List<List<GameObject>>();
     private List<IGenerator> _generators = new List<IGenerator>();
 
-    private Transform _enemyPrefab;
+    private GameObject _enemyPrefab;
 
-    public void ProcessLevel(Transform enemyPrefab)
+    public void ProcessLevel(GameObject enemyPrefab)
     {
         Debug.Log("ProcessLevel");
 
@@ -54,7 +52,7 @@ public class LevelProcessor : MonoBehaviour
         DebugMap(map);
         DrawMap(map);
 
-        levelCount++;
+        entireLevelSectionCount++;
     }
 
     void AddGenerators(List<IGenerator> generators)
@@ -224,7 +222,7 @@ public class LevelProcessor : MonoBehaviour
                     cube.AddComponent<Rotator>();
                     cube.GetComponent<BoxCollider>().isTrigger = true;
 
-                    int adjustedX = x + levelSections.Count * columns;
+                    int adjustedX = x + entireLevelSectionCount * columns;
                     int adjustedY = (map.GetLength(0) - y);
 
                     cube.transform.localPosition = new Vector3(adjustedX, adjustedY - 0.25f, 0.5f);
@@ -233,14 +231,16 @@ public class LevelProcessor : MonoBehaviour
                 else if (map[y, x] == Level.ENEMY)
                 {
                     Debug.Log("Enemy here");
-                    int adjustedX = x + levelSections.Count * columns;
+                    int adjustedX = x + entireLevelSectionCount * columns;
                     int adjustedY = (map.GetLength(0) - y);
                     
-                    var enemy = Instantiate(_enemyPrefab, new Vector3(adjustedX, adjustedY - 1, 0.5f), Quaternion.identity);
-                    enemy.localScale = new Vector3(30f, 30f, 30f);
-                    enemy.rotation = Quaternion.AngleAxis(-90, new Vector3(0, 1, 0));
-                    
-                    levelSection.Add(enemy.gameObject);
+                    var enemy = Instantiate(_enemyPrefab);
+                    var enemyTransform = enemy.GetComponent<Transform>();
+                    enemyTransform.localScale = new Vector3(30f, 30f, 30f);
+                    enemyTransform.rotation = Quaternion.AngleAxis(-90, new Vector3(0, 1, 0));
+                    enemyTransform.localPosition = new Vector3(adjustedX, adjustedY - 1, 0.5f);
+
+                    levelSection.Add(enemy);
                 }
             }
         }

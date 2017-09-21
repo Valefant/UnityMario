@@ -23,7 +23,7 @@ public class ItemGenerator : IGenerator
         {
             var random = Random.Range(0f, 1f);
 
-            if (_monsterProbability <= random)
+            if (_monsterProbability >= random)
             {
                 index = 1;
             }

@@ -38,24 +38,34 @@ public class SimpleCharacterControl : MonoBehaviour
 
     public int points = 0;
 
+    private AudioSource _coinAudioSource;
+    private AudioSource _jumpAuidoSource;
+
     void Start()
     {
-        var audio = gameObject.AddComponent<AudioSource>();
-        var coinClip = Resources.Load("coin") as AudioClip;
-        audio.clip = coinClip;
+        _coinAudioSource = CreateAudioSourceWithClip("coin");
+        _jumpAuidoSource = CreateAudioSourceWithClip("jump");
     }
 
+    private AudioSource CreateAudioSourceWithClip(string clipname)
+    {
+        var audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.volume = SetAudioLevels.sfxVolume;
+        audioSource.clip = Resources.Load(clipname) as AudioClip;
+
+        return audioSource;
+    }
+    
     void OnTriggerEnter(Collider other)
     {
         if (!other.gameObject.name.ToLower().Contains("cube")) return;
-        
+
         points++;
         Destroy(other.gameObject);
-        gameObject.GetComponent<AudioSource>().volume = SetAudioLevels.sfxVolume;
-        gameObject.GetComponent<AudioSource>().Play();
+        _coinAudioSource.Play();
         EventManager.GetInstance().PublishEvent(new PickupEvent(points));
     }
-    
+
     private void OnCollisionEnter(Collision collision)
     {
         ContactPoint[] contactPoints = collision.contacts;
@@ -121,7 +131,7 @@ public class SimpleCharacterControl : MonoBehaviour
     void Update()
     {
         Vector3 oldPosition = gameObject.transform.localPosition;
-        
+
         m_animator.SetBool("Grounded", m_isGrounded);
 
         switch (m_controlMode)
@@ -228,6 +238,7 @@ public class SimpleCharacterControl : MonoBehaviour
         {
             m_jumpTimeStamp = Time.time;
             m_rigidBody.AddForce(Vector3.up * m_jumpForce, ForceMode.Impulse);
+            _jumpAuidoSource.Play();
         }
 
         if (!m_wasGrounded && m_isGrounded)
