@@ -234,6 +234,8 @@ public class LevelProcessor : MonoBehaviour
                     int adjustedX = x + entireLevelSectionCount * columns;
                     int adjustedY = (map.GetLength(0) - y);
 
+                    _enemyPrefab.AddComponent<Rigidbody>();
+                    
                     var enemy = Instantiate(_enemyPrefab);
                     var enemyTransform = enemy.GetComponent<Transform>();
 
