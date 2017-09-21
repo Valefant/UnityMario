@@ -149,11 +149,6 @@ public class Block : MonoBehaviour
         P7 = new Vector3(0f, height, depth);
     }
 
-    private void OnDestroy()
-    {
-        Debug.Log("Hallo");
-    }
-
 #if UNITY_EDITOR
     [MenuItem("GameObject/Mario/Block", false, 50)]
     public static Block CreateHouse()

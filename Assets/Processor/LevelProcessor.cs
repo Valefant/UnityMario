@@ -233,10 +233,16 @@ public class LevelProcessor : MonoBehaviour
                     Debug.Log("Enemy here");
                     int adjustedX = x + entireLevelSectionCount * columns;
                     int adjustedY = (map.GetLength(0) - y);
-                    
+
                     var enemy = Instantiate(_enemyPrefab);
                     var enemyTransform = enemy.GetComponent<Transform>();
+
+                    enemy.AddComponent<EnemyAI>();
                     enemyTransform.localScale = new Vector3(30f, 30f, 30f);
+                    
+                    var boxCollider = enemy.AddComponent<BoxCollider>();
+                    boxCollider.center = new Vector3(0f, 0.01f, 0f);
+                    boxCollider.size = new Vector3(0.015f, 0.02f, 0.018f);
                     enemyTransform.rotation = Quaternion.AngleAxis(-90, new Vector3(0, 1, 0));
                     enemyTransform.localPosition = new Vector3(adjustedX, adjustedY - 1, 0.5f);
 
