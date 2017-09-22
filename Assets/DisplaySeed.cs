@@ -11,6 +11,6 @@ public class DisplaySeed : MonoBehaviour
     void Start()
     {
         _text = gameObject.GetComponent<Text>();
-        _text.text = "Seed: " + LevelProcessor.Seed;
+        _text.text = "Seed: " + Assets.Game.Seed;
     }
 }

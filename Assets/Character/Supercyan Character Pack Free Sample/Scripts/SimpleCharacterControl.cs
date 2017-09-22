@@ -137,7 +137,7 @@ public class SimpleCharacterControl : MonoBehaviour
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
         Vector3 oldPosition = gameObject.transform.localPosition;
 
@@ -231,7 +231,7 @@ public class SimpleCharacterControl : MonoBehaviour
             m_currentDirection = Vector3.Slerp(m_currentDirection, direction, Time.deltaTime * m_interpolation);
 
             //transform.rotation = Quaternion.LookRotation(m_currentDirection);
-            transform.position += m_currentDirection * m_moveSpeed * Time.deltaTime;
+            m_rigidBody.MovePosition(m_currentDirection * m_moveSpeed * Time.deltaTime);
 
             m_animator.SetFloat("MoveSpeed", direction.magnitude);
         }

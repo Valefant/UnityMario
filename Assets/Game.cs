@@ -5,10 +5,20 @@ using UnityEngine.UI;
 
 namespace Assets
 {
+    public enum DayTime
+    {
+        DAY,
+        NIGHT
+    }
+
     class Game : MonoBehaviour
     {
+        public static DayTime dayTime = DayTime.DAY;
+        public static string Seed;
+
         public Transform characterPrefab;
-        public GameObject enemyPrefab;
+        public GameObject bunnyPrefab;
+        public GameObject ghostPrefab;
         public LevelProcessor lpObj;
         public Transform characterTransform;
         private int skyboxIndex = 0;
@@ -26,6 +36,9 @@ namespace Assets
 
         public void Start()
         {
+            Seed = System.Guid.NewGuid().ToString().Substring(0, 8).ToUpper();
+            Random.InitState(Seed.GetHashCode());
+
             lt = GameObject.Find("Directional Light");
             textures1[0] = Resources.Load("dirt stones") as Texture;
             textures2[0] = Resources.Load("leafs dark") as Texture;
@@ -44,7 +57,7 @@ namespace Assets
 
             GameObject levelProcessor = new GameObject();
             lpObj = levelProcessor.AddComponent<LevelProcessor>();
-            lpObj.ProcessLevel(enemyPrefab);
+            lpObj.ProcessLevel(bunnyPrefab, ghostPrefab);
 
             #endregion
 
@@ -101,7 +114,7 @@ namespace Assets
             if (characterTransform.position.x >= (lpObj.columns * lpObj.entireLevelSectionCount - 20))
             {
                 EventManager.GetInstance().PublishEvent(new GenerateSectionEvent());
-                lpObj.ProcessLevel(enemyPrefab);
+                lpObj.ProcessLevel(bunnyPrefab, ghostPrefab);
 
                 if (lpObj.levelSections.Count >= 6)
                 {
@@ -141,6 +154,8 @@ namespace Assets
             }
             if (characterTransform.position.x >= 600 + lastXPosi && characterTransform.position.x <= 605 + lastXPosi)
             {
+                dayTime = DayTime.NIGHT;
+
                 audio.clip = acDoD;
                 audio.Play();
                 Material m = Resources.Load("CloudyCrownMidnight", typeof(Material)) as Material;
@@ -154,6 +169,8 @@ namespace Assets
 
             if (characterTransform.position.x >= 800 + lastXPosi && characterTransform.position.x <= 805 + lastXPosi)
             {
+                dayTime = DayTime.DAY;
+
                 audio.clip = acOutcast;
                 audio.Play();
                 Material m = Resources.Load("CloudyCrownDaybreak", typeof(Material)) as Material;

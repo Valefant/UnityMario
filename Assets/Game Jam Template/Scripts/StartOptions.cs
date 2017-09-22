@@ -1,12 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class StartOptions : MonoBehaviour {
-
-
 
 	public int sceneToStart = 1;										//Index number in build settings of scene to load if changeScenes is true
 	public bool changeScenes;											//If true, load a new scene when Start is pressed, if false, fade out UI and continue in single scene
@@ -37,6 +34,20 @@ public class StartOptions : MonoBehaviour {
 
 	public void StartButtonClicked()
 	{
+        /*
+        var input = GameObject.Find("SeedField").GetComponent<InputField>();
+
+        if (input != null)
+        {
+            if (!string.IsNullOrEmpty(input.text))
+            {
+                Random.InitState(input.text.ToUpper().GetHashCode());
+                input.text = "";
+                SceneManager.LoadScene("Hub");
+            }
+        }
+        */
+
         SimpleCharacterControl.canMove = true;
         //If changeMusicOnStart is true, fade out volume of music group of AudioMixer by calling FadeDown function of PlayMusic, using length of fadeColorAnimationClip as time. 
         //To change fade time, change length of animation "FadeToColor"

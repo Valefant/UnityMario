@@ -21,17 +21,16 @@ public class LevelProcessor : MonoBehaviour
     public Vector3 startingPosition = Vector3.zero;
     public int entireLevelSectionCount = 0;
 
-    public static String Seed;
     public List<List<GameObject>> levelSections = new List<List<GameObject>>();
     private List<IGenerator> _generators = new List<IGenerator>();
 
-    private GameObject _enemyPrefab;
+    private GameObject _bunnyPrefab;
+    private GameObject _ghostPrefab;
 
-    public void ProcessLevel(GameObject enemyPrefab)
+    public void ProcessLevel(GameObject bunnyPrefab, GameObject ghostPrefab)
     {
-        Debug.Log("ProcessLevel");
-
-        _enemyPrefab = enemyPrefab;
+        _bunnyPrefab = bunnyPrefab;
+        _ghostPrefab = ghostPrefab;
         
         List<IGenerator> generators = new List<IGenerator>();
         AddGenerators(generators);
@@ -69,9 +68,6 @@ public class LevelProcessor : MonoBehaviour
         levelInfo.gapProbability = gapProbability;
         levelInfo.steepProbability = steepProbability;
         levelInfo.blockProbability = blockProbability;
-
-        Seed = Guid.NewGuid().ToString().Substring(0, 8).ToUpper();
-        Random.InitState(Seed.GetHashCode());
         
         GroundGenerator groundGenerator = new GroundGenerator(levelInfo);
         ObstacleGenerator obstacleGenerator = new ObstacleGenerator(levelInfo);
@@ -230,13 +226,20 @@ public class LevelProcessor : MonoBehaviour
                 } 
                 else if (map[y, x] == Level.ENEMY)
                 {
-                    Debug.Log("Enemy here");
                     int adjustedX = x + entireLevelSectionCount * columns;
                     int adjustedY = (map.GetLength(0) - y);
 
-                    _enemyPrefab.AddComponent<Rigidbody>();
-                    
-                    var enemy = Instantiate(_enemyPrefab);
+                    if (_bunnyPrefab.GetComponent<Rigidbody>() == null)
+                    {
+                        _bunnyPrefab.AddComponent<Rigidbody>();
+                    }
+
+                    if (_ghostPrefab.GetComponent<Rigidbody>() == null)
+                    {
+                        _ghostPrefab.AddComponent<Rigidbody>();
+                    }
+
+                    var enemy = Instantiate(Assets.Game.dayTime == Assets.DayTime.NIGHT ? _ghostPrefab :_bunnyPrefab);
                     var enemyTransform = enemy.GetComponent<Transform>();
 
                     enemy.AddComponent<EnemyAI>();
@@ -275,12 +278,24 @@ public class LevelProcessor : MonoBehaviour
 
         BoxCollider boxCollider = ground.AddComponent<BoxCollider>();
 
+        createInvisibleEdgeCollider(new Vector2(StartPosition, GroundHeight), ground);
+        createInvisibleEdgeCollider(new Vector2(StartPosition + GroundWidth - 1, GroundHeight), ground);
+
         if (startingPosition == Vector3.zero)
         {
-            startingPosition = new Vector3(Random.Range(1, GroundWidth / 2), GroundHeight + 1, 0.5f);
+            startingPosition = new Vector3(1f, GroundHeight, 0.5f);
         }
 
         levelSection.Add(ground);
+    }
+
+    private void createInvisibleEdgeCollider(Vector2 pos, GameObject ground)
+    {
+        GameObject invisbleBox = new GameObject();
+        invisbleBox.name = "invisibleBox";
+        invisbleBox.AddComponent<BoxCollider>().isTrigger = true;
+        invisbleBox.transform.position = new Vector3(pos.x + 0.5f, pos.y + 0.5f, 0.5f);
+        invisbleBox.transform.parent = ground.transform;
     }
 
     private void IfBlockTypeCreate(Level level, int r, int c, List<GameObject> levelSection)
