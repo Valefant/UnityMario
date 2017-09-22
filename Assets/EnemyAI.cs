@@ -29,6 +29,7 @@ public class EnemyAI : MonoBehaviour
 
         if (other.gameObject.name == "invisibleBox" || other.gameObject.name.ToLower().Contains("rabbit"))
         {
+            _rigidbody.velocity = Vector3.zero;
             float yDir = _rigidbody.rotation.y > 0 ? -90 : 90; 
             _rigidbody.MoveRotation(Quaternion.AngleAxis(yDir, new Vector3(0, 1, 0)));
         }
