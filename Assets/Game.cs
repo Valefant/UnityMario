@@ -32,8 +32,12 @@ namespace Assets
         List<int> materialIndexes = new List<int>();
         Texture[] textures1 = new Texture[4];
         Texture[] textures2 = new Texture[4];
+        List<Material> _skyboxMaterials = new List<Material>();
 
+        public float dayTimeSwitchtingRange = 0.5f;
 
+        private int _key = 5;
+        
         public void Start()
         {
             Seed = System.Guid.NewGuid().ToString().Substring(0, 8).ToUpper();
@@ -49,6 +53,8 @@ namespace Assets
             textures1[3] = Resources.Load("dirt stones") as Texture;
             textures2[3] = Resources.Load("sand stones") as Texture;
 
+            LoadSkyBoxMaterials();
+            
             int rnd = (int)(Random.Range(0f, 0.3f) * 10);
             Ground.texture1 = textures1[rnd];
             Ground.texture2 = textures2[rnd];
@@ -89,13 +95,12 @@ namespace Assets
             RenderSettings.skybox = m;
 
             audio = gameObject.AddComponent<AudioSource>();
-            AudioClip vv = Resources.Load("Songs/Morning") as AudioClip;
+            acMorning = Resources.Load("Songs/Morning") as AudioClip;
             acSundown = Resources.Load("Songs/Sundown") as AudioClip;
             acDoD = Resources.Load("Songs/Dance Of Death") as AudioClip;
             acOutcast = Resources.Load("Songs/Outcast") as AudioClip;
-            acMorning = Resources.Load("Songs/Morning") as AudioClip;
 
-            audio.clip = vv;
+            audio.clip = acMorning;
             audio.loop = true;
             audio.volume = 0.1f;
             audio.Play();
@@ -129,78 +134,86 @@ namespace Assets
                     lpObj.levelSections.RemoveRange(0, 2);
                 }
             }
-
-            if (characterTransform.position.x >= 200 + lastXPosi && characterTransform.position.x <= 205 + lastXPosi)
+            
+            if (characterTransform.position.x >= 1000 * dayTimeSwitchtingRange + lastXPosi && _key == 1)
             {
-                audio.clip = acSundown;
+                audio.clip = acMorning;
                 audio.Play();
-                Material m = Resources.Load("CloudyCrownSunset", typeof(Material)) as Material;
-                Debug.Log("Matieral-Name: " + m.name);
-                RenderSettings.skybox = m;
-                lt.GetComponent<Light>().intensity = 0.5f;
+                RenderSettings.skybox = _skyboxMaterials[4];
+                lastXPosi = characterTransform.position.x;
+                lt.GetComponent<Light>().intensity = 1f;
+                FillMaterialIndex();
                 int rnd = (int)(Random.Range(0f, 0.3f) * 10);
                 Ground.texture1 = textures1[rnd];
                 Ground.texture2 = textures2[rnd];
-            }
-            if (characterTransform.position.x >= 400 + lastXPosi && characterTransform.position.x <= 405 + lastXPosi)
-            {
-                Material m = Resources.Load("CloudyCrownEvening", typeof(Material)) as Material;
-                Debug.Log("Matieral-Name: " + m.name);
-                RenderSettings.skybox = m;
-                lt.GetComponent<Light>().intensity = 0.3f;
-                int rnd = (int)(Random.Range(0f, 0.3f) * 10);
-                Ground.texture1 = textures1[rnd];
-                Ground.texture2 = textures2[rnd];
-            }
-            if (characterTransform.position.x >= 600 + lastXPosi && characterTransform.position.x <= 605 + lastXPosi)
-            {
-                dayTime = DayTime.NIGHT;
 
-                audio.clip = acDoD;
-                audio.Play();
-                Material m = Resources.Load("CloudyCrownMidnight", typeof(Material)) as Material;
-                Debug.Log("Matieral-Name: " + m.name);
-                RenderSettings.skybox = m;
-                lt.GetComponent<Light>().intensity = 0.0f;
-                int rnd = (int)(Random.Range(0f, 0.3f) * 10);
-                Ground.texture1 = textures1[rnd];
-                Ground.texture2 = textures2[rnd];
+                _key = 5;
             }
-
-            if (characterTransform.position.x >= 800 + lastXPosi && characterTransform.position.x <= 805 + lastXPosi)
+            else if (characterTransform.position.x >= 800 * dayTimeSwitchtingRange + lastXPosi && _key == 2)
             {
                 dayTime = DayTime.DAY;
 
                 audio.clip = acOutcast;
                 audio.Play();
-                Material m = Resources.Load("CloudyCrownDaybreak", typeof(Material)) as Material;
-                Debug.Log("Matieral-Name: " + m.name);
-                RenderSettings.skybox = m;
+                RenderSettings.skybox = _skyboxMaterials[3];
                 lt.GetComponent<Light>().intensity = 0.6f;
                 int rnd = (int)(Random.Range(0f, 0.3f) * 10);
                 Ground.texture1 = textures1[rnd];
                 Ground.texture2 = textures2[rnd];
+
+                _key--;
             }
-            if (characterTransform.position.x >= 1000 + lastXPosi && characterTransform.position.x <= 1005 + lastXPosi)
+            else if (characterTransform.position.x >= 600 * dayTimeSwitchtingRange + lastXPosi && _key == 3)
             {
-                audio.clip = acMorning;
+                dayTime = DayTime.NIGHT;
+
+                audio.clip = acDoD;
                 audio.Play();
-                Material m = Resources.Load("CloudyCrownMidday", typeof(Material)) as Material;
-                Debug.Log("Matieral-Name: " + m.name);
-                RenderSettings.skybox = m;
-                lastXPosi = characterTransform.position.x;
-                lt.GetComponent<Light>().intensity = 1f;
-                fillMaterialIndex();
+                RenderSettings.skybox = _skyboxMaterials[2];
+                lt.GetComponent<Light>().intensity = 0.0f;
                 int rnd = (int)(Random.Range(0f, 0.3f) * 10);
                 Ground.texture1 = textures1[rnd];
                 Ground.texture2 = textures2[rnd];
+
+                _key--;
+            }
+            else if (characterTransform.position.x >= 400 * dayTimeSwitchtingRange + lastXPosi && _key == 4)
+            {
+                RenderSettings.skybox = _skyboxMaterials[1];
+                lt.GetComponent<Light>().intensity = 0.3f;
+                int rnd = (int)(Random.Range(0f, 0.3f) * 10);
+                Ground.texture1 = textures1[rnd];
+                Ground.texture2 = textures2[rnd];
+
+                _key--;
+            }
+            else if (characterTransform.position.x >= 200 * dayTimeSwitchtingRange + lastXPosi && _key == 5)
+            {
+                audio.clip = acSundown;
+                audio.Play();
+                RenderSettings.skybox = _skyboxMaterials[0];
+                lt.GetComponent<Light>().intensity = 0.5f;
+                int rnd = (int)(Random.Range(0f, 0.3f) * 10);
+                Ground.texture1 = textures1[rnd];
+                Ground.texture2 = textures2[rnd];
+
+                _key--;
             }
         }
 
-        private void fillMaterialIndex()
+        private void FillMaterialIndex()
         {
             for (int i = 0; i < materialIndexes.Count - 1; i++)
                 materialIndexes[i] = i;
+        }
+
+        private void LoadSkyBoxMaterials()
+        {
+            _skyboxMaterials.Add(Resources.Load("CloudyCrownSunset", typeof(Material)) as Material);
+            _skyboxMaterials.Add(Resources.Load("CloudyCrownEvening", typeof(Material)) as Material);
+            _skyboxMaterials.Add(Resources.Load("CloudyCrownMidnight", typeof(Material)) as Material);
+            _skyboxMaterials.Add(Resources.Load("CloudyCrownDaybreak", typeof(Material)) as Material);
+            _skyboxMaterials.Add(Resources.Load("CloudyCrownMidday", typeof(Material)) as Material);
         }
     }
 }

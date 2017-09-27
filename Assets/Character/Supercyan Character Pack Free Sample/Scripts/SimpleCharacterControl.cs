@@ -31,37 +31,29 @@ public class SimpleCharacterControl : MonoBehaviour
     private bool m_wasGrounded;
     private Vector3 m_currentDirection = Vector3.zero;
 
-    private float m_jumpTimeStamp = 0;
-    private float m_minJumpInterval = 0.25f;
-
     private bool m_isGrounded;
     private List<Collider> m_collisions = new List<Collider>();
 
     public int points = 0;
 
+    private bool _dead = false;
+    
     private AudioSource _coinAudioSource;
-    private AudioSource _jumpAuidoSource;
-
+    private AudioSource _jumpAudioSource;
+    private AudioSource _gameOverAudioSource;
+    
     void Start()
     {
         _coinAudioSource = CreateAudioSourceWithClip("coin");
-        _jumpAuidoSource = CreateAudioSourceWithClip("jump");
+        _jumpAudioSource = CreateAudioSourceWithClip("jump");
+        _gameOverAudioSource = CreateAudioSourceWithClip("gameOver");
         m_rigidBody.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
-    }
-
-    private AudioSource CreateAudioSourceWithClip(string clipname)
-    {
-        var audioSource = gameObject.AddComponent<AudioSource>();
-        audioSource.volume = SetAudioLevels.sfxVolume;
-        audioSource.clip = Resources.Load(clipname) as AudioClip;
-
-        return audioSource;
     }
     
     void OnTriggerEnter(Collider other)
     {
         if (!other.gameObject.name.ToLower().Contains("cube")) return;
-
+        
         points++;
         Destroy(other.gameObject);
         _coinAudioSource.Play();
@@ -70,9 +62,11 @@ public class SimpleCharacterControl : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name.ToLower().Contains("rabbit"))
+        if (collision.gameObject.name.ToLower().Contains("rabbit") || collision.gameObject.name.ToLower().Contains("ghost"))
         {
-            SceneManager.LoadScene("Hub");
+            _gameOverAudioSource.Play();
+            m_animator.SetTrigger("Wave");
+            _dead = true;
             EventManager.GetInstance().PublishEvent(new PickupEvent(0));
             canMove = false;
         }
@@ -139,6 +133,19 @@ public class SimpleCharacterControl : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (_dead)
+        {
+            transform.Rotate(Vector3.left * 90 * Time.deltaTime);
+            
+            Debug.Log(transform.rotation.eulerAngles.x);
+            
+            if (transform.rotation.eulerAngles.x <= 270f)
+            {
+                _dead = false;
+                SceneManager.LoadScene("Hub");
+            }
+        }
+        
         Vector3 oldPosition = gameObject.transform.localPosition;
 
         m_animator.SetBool("Grounded", m_isGrounded);
@@ -241,13 +248,12 @@ public class SimpleCharacterControl : MonoBehaviour
 
     private void JumpingAndLanding()
     {
-        bool jumpCooldownOver = (Time.time - m_jumpTimeStamp) >= m_minJumpInterval;
+//        bool jumpCooldownOver = (Time.time - m_jumpTimeStamp) >= m_minJumpInterval;
 
-        if (jumpCooldownOver && m_isGrounded && Input.GetKey(KeyCode.Space))
+        if (m_isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
-            m_jumpTimeStamp = Time.time;
             m_rigidBody.AddForce(Vector3.up * m_jumpForce, ForceMode.Impulse);
-            _jumpAuidoSource.Play();
+            _jumpAudioSource.Play();
         }
 
         if (!m_wasGrounded && m_isGrounded)
@@ -259,5 +265,14 @@ public class SimpleCharacterControl : MonoBehaviour
         {
             m_animator.SetTrigger("Jump");
         }
+    }
+    
+    private AudioSource CreateAudioSourceWithClip(string clipname)
+    {
+        var audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.volume = SetAudioLevels.sfxVolume;
+        audioSource.clip = Resources.Load(clipname) as AudioClip;
+
+        return audioSource;
     }
 }
