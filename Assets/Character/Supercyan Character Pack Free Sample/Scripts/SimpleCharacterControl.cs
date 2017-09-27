@@ -28,6 +28,9 @@ public class SimpleCharacterControl : MonoBehaviour
     private readonly float m_backwardsWalkScale = 0.16f;
     private readonly float m_backwardRunScale = 0.66f;
 
+    private float m_jumpTimeStamp = 0;
+    private float m_minJumpInterval = 0.25f;
+    
     private bool m_wasGrounded;
     private Vector3 m_currentDirection = Vector3.zero;
 
@@ -248,9 +251,9 @@ public class SimpleCharacterControl : MonoBehaviour
 
     private void JumpingAndLanding()
     {
-//        bool jumpCooldownOver = (Time.time - m_jumpTimeStamp) >= m_minJumpInterval;
+        bool jumpCooldownOver = (Time.time - m_jumpTimeStamp) >= m_minJumpInterval;
 
-        if (m_isGrounded && Input.GetKeyDown(KeyCode.Space))
+        if (jumpCooldownOver && m_isGrounded && Input.GetKey(KeyCode.Space))
         {
             m_rigidBody.AddForce(Vector3.up * m_jumpForce, ForceMode.Impulse);
             _jumpAudioSource.Play();
