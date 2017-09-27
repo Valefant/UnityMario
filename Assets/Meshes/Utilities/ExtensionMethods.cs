@@ -7,6 +7,8 @@ namespace ExtensionMethods
 {
     public static class MyExtensions
     {
+        public static int key = 1;
+        
         public static Vector3 Vector3(float x, float y, float size)
         {
             return new Vector3(x * size, y * size);
@@ -30,7 +32,12 @@ namespace ExtensionMethods
             {
                 for (int c = 0; c < map.GetLength(1); c++)
                 {
-                    if (r > 0 && map[r, c] == Level.GROUND && map[r - 1, c] == Level.EMPTY)
+                    if (key == 1 && c < map.GetLength(1) - 1 && r > 0 && map[r, c] == Level.GROUND && map[r - 1, c] == Level.EMPTY && map[r - 1, c + 1] == Level.GROUND)
+                    {
+                        key--;
+                    }
+                    
+                    if (key == 0 && r > 0 && map[r, c] == Level.GROUND && map[r - 1, c] == Level.EMPTY)
                     {
                         var random = Random.Range(0f, 1f);
 
